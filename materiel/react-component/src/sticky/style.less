@@ -1,0 +1,17 @@
+.mica-sticky {
+  width: 100%;
+  z-index: 9999;
+
+  &:not([data-simulate=true]) {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+
+  &[data-simulate=true] {
+    position: relative;
+
+    &[data-sticky=true] > .child {
+      position: fixed;
+    }
+  }
+}

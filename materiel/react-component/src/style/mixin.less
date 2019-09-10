@@ -1,0 +1,194 @@
+.truncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.15;
+}
+
+// 兼容下已经存在的方式
+.multiple-line(@line) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @line;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+.multipleLine(@line) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @line;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+.containBg() {
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.coverBg() {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.topLinearShadow() {
+  &::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 150px;
+    background-image: linear-gradient(rgba(210, 210, 210, 1), rgba(210, 210, 210, 0));
+  }
+
+  /* 兼容iPhoneX */
+  @media only screen
+    and (-webkit-device-pixel-ratio: 3) {
+    &::before {
+      border-top: 68px solid rgb(210, 210, 210);
+    }
+  }
+}
+
+.hairline(@color, @direction) when (@direction = 'top') {
+  border-top: 1px solid @color;
+
+  html:not([data-scale]) & {
+    @media (min-resolution: 2dppx) {
+      position: relative;
+      border-top: none;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: -1px;
+        width: 100%;
+        height: 1px;
+        border-top: 1px solid @color;
+        transform-origin: 0 0;
+        transform: scaleY(0.5);
+
+        @media (min-resolution: 3dppx) {
+          transform: scaleY(0.33);
+        }
+      }
+    }
+  }
+}
+
+.hairline(@color, @direction) when (@direction = 'right') {
+  border-right: 1px solid @color;
+
+  html:not([data-scale]) & {
+    @media (min-resolution: 2dppx) {
+      position: relative;
+      border-right: none;
+
+      &::after {
+        content: '';
+        position: absolute;
+        right: -1px;
+        top: 0;
+        width: 1px;
+        height: 100%;
+        border-right: 1px solid @color;
+        transform-origin: 0 0;
+        transform: scaleX(0.5);
+
+        @media (min-resolution: 3dppx) {
+          transform: scaleX(0.33);
+        }
+      }
+    }
+  }
+}
+
+.hairline(@color, @direction) when (@direction = 'bottom') {
+  border-bottom: 1px solid @color;
+
+  html:not([data-scale]) & {
+    @media (min-resolution: 2dppx) {
+      position: relative;
+      border-bottom: none;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -1px;
+        width: 100%;
+        height: 1px;
+        border-bottom: 1px solid @color;
+        transform-origin: 0 0;
+        transform: scaleY(0.5);
+
+        @media (min-resolution: 3dppx) {
+          transform: scaleY(0.33);
+        }
+      }
+    }
+  }
+}
+
+.hairline(@color, @direction) when (@direction = 'left') {
+  border-left: 1px solid @color;
+
+  html:not([data-scale]) & {
+    @media (min-resolution: 2dppx) {
+      position: relative;
+      border-left: none;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: -1px;
+        top: 0;
+        width: 1px;
+        height: 100%;
+        border-left: 1px solid @color;
+        transform-origin: 0 0;
+        transform: scaleX(0.5);
+
+        @media (min-resolution: 3dppx) {
+          transform: scaleX(0.33);
+        }
+      }
+    }
+  }
+}
+
+.hairline(@color, @radius: 0) when ((@radius = 0) or (ispixel(@radius)) or (ispercentage(@radius))) {
+  border: 1px solid @color;
+  border-radius: @radius;
+
+  html:not([data-scale]) & {
+    @media (min-resolution: 2dppx) {
+      position: relative;
+      border: none;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 200%;
+        height: 200%;
+        border: 1px solid @color;
+        border-radius: @radius * 2;
+        box-sizing: border-box;
+        transform-origin: 0 0;
+        transform: scale(0.5);
+
+        @media (min-resolution: 3dppx) {
+          width: 300%;
+          height: 300%;
+          border-radius: @radius * 3;
+          transform: scale(0.33);
+        }
+      }
+    }
+  }
+}

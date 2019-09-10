@@ -1,0 +1,59 @@
+@import "../style/mixin.less";
+@import "../style/variable.less";
+
+.mica-tabs {
+  .mica-tab-list {
+    position: relative;
+    display: flex;
+    background-color: @white;
+
+    li {
+      flex: 1;
+    }
+
+    .mica-x-scroll {
+      width: 100%;
+
+      li {
+        flex: none;
+      }
+    }
+
+    .cursor-wrap {
+      position: absolute;
+      bottom: 0;
+      transition-property: left;
+      transition-timing-function: ease-out;
+
+      .cursor {
+        display: block;
+      }
+    }
+  }
+
+  .mica-tab-panel-list {
+    &[data-type=split] {
+      width: 100%;
+      overflow: hidden;
+
+      > .wrap {
+        display: flex;
+        align-items: flex-start;
+        transition-property: transform;
+        transition-timing-function: ease-out;
+
+        > div {
+          flex: none;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .mica-tab-list,
+  .mica-tab-list .tab,
+  .mica-tab-panel-list,
+  .mica-tab-panel-list .tab-panel {
+    box-sizing: border-box;
+  }
+}

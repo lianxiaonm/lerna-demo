@@ -1,0 +1,32 @@
+.progress-example {
+  margin: 20px;
+  font-size: 20px;
+
+  .mica-progress-bar {
+    margin-bottom: 60px;
+    width: 400px;
+
+    .sale-count {
+      padding: 0 12px;
+      display: flex;
+      color: #333;
+      position: relative;
+      z-index: 2;
+      line-height: 1.2;
+    }
+  }
+
+  .mica-progress-circle {
+    .numb {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      &::after {
+        font-size: 18px;
+        content: '%';
+      }
+    }
+  }
+}

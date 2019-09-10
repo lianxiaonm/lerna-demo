@@ -1,0 +1,23 @@
+<%
+const {title, heads, bodies} = htmlWebpackPlugin.options
+%>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <title><%- title %></title>
+  <meta charset="utf-8"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="format-detection" content="email=no"/>
+  <% for(let i = 0; i < heads.length; i++) { %>
+    <%= heads[i] %>
+  <% } %>
+</head>
+<body>
+<main></main>
+<% for(let i = 0; i < bodies.length; i++) { %>
+  <%= bodies[i] %>
+<% } %>
+</body>
+</html>

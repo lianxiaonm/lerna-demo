@@ -1,0 +1,61 @@
+{
+  "name": "mini-build",
+  "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "lianxiao.nm",
+    "email": "lianxiao.nm@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "workspaces": [
+    "packages/*",
+    "extension/*",
+    "plugin/*",
+    "solution/*",
+    "materiel/*"
+  ],
+  "scripts": {
+    "build": "yarn clean && yarn pkg",
+    "clean": "yarn clean:es && yarn clean:lib",
+    "clean:es": "rimraf materiel/*/es",
+    "clean:lib": "rimraf materiel/*/lib",
+    "postinstall": "lerna link",
+    "precommit": "lint-staged",
+    "lint": "npm run lint:js && npm run lint:style",
+    "lint:js": "eslint .",
+    "lint:style": "stylelint \"**/*.less\" --syntax less",
+    "pkg": "node -r esm ./scripts/package"
+  },
+  "devDependencies": {
+    "@babel/cli": "7",
+    "@babel/core": "7",
+    "@mini-case/babel-preset": "1",
+    "@mini-case/eslint-config": "1",
+    "@mini-case/solution-react": "1",
+    "babel-core": "^7.0.0-bridge.0",
+    "colors": "1",
+    "consola": "2",
+    "eslint": "5",
+    "esm": "3",
+    "husky": "0",
+    "lerna": "3",
+    "lint-staged": "8",
+    "ncp": "2",
+    "stylelint": "10",
+    "stylelint-config-standard": "18",
+    "rimraf": "2"
+  },
+  "engines": {
+    "node": ">= 8.10.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "lint-staged": {
+    "*.js": "eslint",
+    "*.less": "stylelint --syntax less"
+  }
+}

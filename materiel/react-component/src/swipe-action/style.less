@@ -1,0 +1,28 @@
+.mica-swipe-action {
+  position: relative;
+  overflow: hidden;
+
+  .action {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    > * {
+      height: 100%;
+    }
+  }
+
+  &[data-orientation=left] {
+    .action {
+      right: 0;
+      transform: translateX(100%);
+    }
+  }
+
+  &[data-orientation=right] {
+    .action {
+      left: 0;
+      transform: translateX(-100%);
+    }
+  }
+}

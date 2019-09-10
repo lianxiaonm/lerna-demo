@@ -1,0 +1,53 @@
+.mica-pull-refresh {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  > .scroller {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
+
+  > .mica-progress-circle {
+    position: absolute;
+    left: 50%;
+    top: -70px;
+    margin-left: -23px;
+
+    svg {
+      width: 46px;
+      height: 46px;
+    }
+  }
+
+  > i {
+    position: absolute;
+    left: 50%;
+    top: -70px;
+    width: 46px;
+    height: 46px;
+    margin-left: -23px;
+    border-radius: 50%;
+    border: 3px solid #e5e9f2;
+    border-top-color: #09c3ff;
+    box-sizing: border-box;
+    animation: spin 1s infinite linear;
+  }
+
+  &[data-kb=true] {
+    > i {
+      border-top-color: #ff5900;
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

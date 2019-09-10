@@ -1,0 +1,10 @@
+#!/usr/bin/env node -r esm
+
+async function main() {
+  console.log('--build--')
+}
+
+main().catch((error) => {
+  consola.error(error)
+  process.exit(1)
+})

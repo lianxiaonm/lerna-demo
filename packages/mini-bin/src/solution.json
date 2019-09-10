@@ -1,0 +1,18 @@
+{
+  "solutions": [
+    {
+      "cate": "solution",
+      "title": "react",
+      "show": true,
+      "solution": "@mini-case/solution-react",
+      "boilerplate": "@mini-case/boilerplate-react"
+    },
+    {
+      "cate": "solution",
+      "title": "vue",
+      "show": false,
+      "solution": "@mini-case/solution-vue",
+      "boilerplate": "@mini-case/boilerplate-vue"
+    }
+  ]
+}

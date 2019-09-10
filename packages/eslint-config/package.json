@@ -1,0 +1,31 @@
+{
+  "name": "@mini-case/eslint-config",
+  "version": "1.0.4",
+  "license": "MIT",
+  "description": "mini case eslint config for react",
+  "author": {
+    "name": "lianxiao.nm",
+    "email": "lianxiao.nm@gmail.com",
+    "url": ""
+  },
+  "keywords": [
+    "eslint config"
+  ],
+  "main": "src/index.js",
+  "peerDependencies": {
+    "eslint": "5"
+  },
+  "dependencies": {
+    "babel-eslint": "10",
+    "eslint-config-airbnb": "17",
+    "eslint-plugin-import": "2",
+    "eslint-plugin-jsx-a11y": "6",
+    "eslint-plugin-react": "7"
+  },
+  "devDependencies": {
+    "eslint": "5"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="31px" viewBox="0 0 30 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43 (38999) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 4</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="2.4158453e-13" y="18.5687382" width="39.3220339" height="2.7306968"></rect>
+        <rect id="path-2" x="2.84217094e-13" y="18.5687382" width="39.3220339" height="2.7306968"></rect>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.200000003">
+        <g id="弹窗" transform="translate(-146.000000, -362.000000)">
+            <g id="Group-26" transform="translate(118.000000, 335.000000)">
+                <g id="Group-4" transform="translate(43.041631, 43.041631) rotate(-315.000000) translate(-43.041631, -43.041631) translate(23.041631, 23.041631)">
+                    <g id="Rectangle-15">
+                        <use fill="#000000" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        <rect x="2.4158453e-13" y="18.5687382" width="39.3220339" height="2.7306968"></rect>
+                    </g>
+                    <g id="Rectangle-15" transform="translate(19.661017, 19.934087) rotate(-270.000000) translate(-19.661017, -19.934087) ">
+                        <use fill="#000000" fill-rule="evenodd" xlink:href="#path-2"></use>
+                        <rect x="2.84217094e-13" y="18.5687382" width="39.3220339" height="2.7306968"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

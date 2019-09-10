@@ -1,0 +1,38 @@
+.tabs-example {
+  .cdp {
+    width: 100%;
+    height: 300px;
+  }
+
+  .mica-tab-list {
+    li {
+      width: 30%;
+
+      &[data-selected=true] {
+        color: #fff;
+        background-color: #fb6165;
+      }
+
+      span {
+        display: block;
+        line-height: 100px;
+        text-align: center;
+      }
+    }
+
+    .cursor {
+      height: 2px;
+      background-color: #fb6165;
+    }
+  }
+
+  .mica-tab-panel-list {
+    .tab-panel {
+      padding: 100px 30px;
+    }
+
+    p {
+      margin: 30px 0;
+    }
+  }
+}

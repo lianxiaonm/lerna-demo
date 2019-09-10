@@ -1,0 +1,32 @@
+{
+  "name": "@mini-case/bin",
+  "version": "1.0.2",
+  "license": "MIT",
+  "bin": {
+    "mica": "./bin/index"
+  },
+  "author": {
+    "name": "lianxiao.nm",
+    "email": "lianxiao.nm@gmail.com",
+    "url": ""
+  },
+  "dependencies": {
+    "colors": "1",
+    "commander": "2",
+    "compare-versions": "3",
+    "fetch.io": "5",
+    "inquirer": "5",
+    "map-stream": "0",
+    "resolve": "1",
+    "rimraf": "2",
+    "tar-fs": "1",
+    "vinyl-fs": "3",
+    "write-json-file": "2"
+  },
+  "devDependencies": {
+    "@mini-case/eslint-config": "1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

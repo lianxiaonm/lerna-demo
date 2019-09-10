@@ -1,0 +1,34 @@
+@import "../style/mixin.less";
+@import "../style/variable.less";
+
+.mica-alert .modal-wrap {
+  width: 540px;
+  display: flex;
+  flex-direction: column;
+
+  > span {
+    margin-left: 60px;
+    margin-right: 60px;
+    text-align: center;
+
+    &:first-child {
+      padding-top: 42px;
+      font-size: 36px;
+    }
+
+    &:nth-child(2) {
+      margin-top: 24px;
+      font-size: 30px;
+      color: @grey;
+    }
+  }
+
+  > a {
+    margin-top: 30px;
+    line-height: 100px;
+    text-align: center;
+    font-size: 36px;
+    color: #108ee9;
+    .hairline(#F2F2F2, 'top');
+  }
+}

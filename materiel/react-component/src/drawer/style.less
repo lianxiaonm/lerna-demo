@@ -1,0 +1,35 @@
+@import "../style/variable.less";
+@import "../style/mixin.less";
+
+.mica-drawer {
+  .modal-wrap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    border-radius: 0;
+    transform: translate3d(0, 0, 0);
+  }
+
+  &.fade-enter {
+    > .modal-wrap {
+      transform: translate3d(0, 100%, 0);
+    }
+  }
+
+  &.fade-enter-active,
+  &.fade-leave {
+    > .modal-wrap {
+      transform: translate3d(0, 0, 0);
+      transition-property: transform;
+      transition-timing-function: ease-in;
+    }
+  }
+
+  &.fade-leave-active {
+    > .modal-wrap {
+      transform: translate3d(0, 100%, 0);
+    }
+  }
+}

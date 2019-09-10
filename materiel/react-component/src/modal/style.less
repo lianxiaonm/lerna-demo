@@ -1,0 +1,40 @@
+@import "../style/variable.less";
+
+.mica-modal {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  &[data-show=true] {
+    display: block;
+  }
+
+  &.fade-enter {
+    opacity: 0;
+  }
+
+  &.fade-enter-active,
+  &.fade-leave {
+    opacity: 1;
+    transition-property: opacity;
+    transition-timing-function: ease-in;
+  }
+
+  &.fade-leave-active {
+    opacity: 0;
+  }
+
+  > .modal-wrap {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius: 10px;
+    transform: translate3d(-50%, -50%, 0);
+    background-color: @white;
+  }
+}

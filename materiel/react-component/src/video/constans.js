@@ -1,0 +1,30 @@
+export const EVENTS = [
+  'timeUpdate',
+  'abort',
+  'canPlay',
+  'canPlayThrough',
+  'durationChange',
+  'emptied',
+  'ended',
+  'error',
+  'loadedData',
+  'pause',
+  'play',
+  'waiting',
+]
+
+export const PROPERTIES = [
+  'autoplay',
+  'controls',
+  'currentTime',
+  'duration',
+  'ended',
+  'error',
+  'loop',
+  'networkState',
+  'paused',
+  'preload',
+  'readyState',
+  'src',
+  'muted',
+]

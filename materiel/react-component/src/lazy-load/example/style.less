@@ -1,0 +1,18 @@
+.lazy-load-example {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .mica-lazy-load {
+    margin-top: 50px;
+
+    &:not([data-fixed-width=true]) {
+      height: 400px;
+    }
+
+    &:not([data-fixed-height=true]) {
+      width: 400px;
+    }
+  }
+}

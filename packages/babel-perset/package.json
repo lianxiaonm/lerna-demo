@@ -1,0 +1,41 @@
+{
+  "name": "@mini-case/babel-preset",
+  "version": "1.0.1",
+  "license": "MIT",
+  "description": "mini case babel preset for react",
+  "author": {
+    "name": "lianxiao.nm",
+    "email": "lianxiao.nm@gmail.com",
+    "url": ""
+  },
+  "main": "src/index.js",
+  "dependencies": {
+    "@babel/core": "7",
+    "@babel/plugin-proposal-class-properties": "7",
+    "@babel/plugin-proposal-decorators": "7",
+    "@babel/plugin-proposal-do-expressions": "7",
+    "@babel/plugin-proposal-export-default-from": "7",
+    "@babel/plugin-proposal-export-namespace-from": "7",
+    "@babel/plugin-proposal-function-bind": "7",
+    "@babel/plugin-proposal-function-sent": "7",
+    "@babel/plugin-proposal-json-strings": "7",
+    "@babel/plugin-proposal-logical-assignment-operators": "7",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "7",
+    "@babel/plugin-proposal-numeric-separator": "7",
+    "@babel/plugin-proposal-optional-chaining": "7",
+    "@babel/plugin-proposal-pipeline-operator": "7",
+    "@babel/plugin-proposal-throw-expressions": "7",
+    "@babel/plugin-syntax-dynamic-import": "7",
+    "@babel/plugin-syntax-import-meta": "7",
+    "@babel/plugin-transform-runtime": "7",
+    "@babel/preset-env": "7",
+    "@babel/preset-react": "7",
+    "@babel/preset-stage-0": "7"
+  },
+  "devDependencies": {
+    "@mini-case/eslint-config": "1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

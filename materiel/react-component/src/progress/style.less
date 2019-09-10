@@ -1,0 +1,38 @@
+//@font-face {
+//  font-family: 'isometric-numb';
+//  src: url(./font/Isometric-numb.ttf);
+//}
+
+.mica-progress {
+  &-bar {
+    position: relative;
+    border-radius: 100px;
+    overflow: hidden;
+    background: #e4e8f1;
+    min-height: 10px;
+
+    .bar-inner {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      border-radius: 100px;
+      transition: width;
+    }
+  }
+
+  &-circle {
+    position: relative;
+    display: inline-flex;
+
+    svg {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  &-number {
+    align-items: center;
+    display: inline-flex;
+  }
+}

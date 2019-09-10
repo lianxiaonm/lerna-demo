@@ -1,0 +1,52 @@
+
+.mica-spinner {
+  fill: #666;
+  stroke: #666;
+  position: relative;
+
+  > svg {
+    width: 75px;
+    height: 75px;
+  }
+
+  .svg-css {
+    width: 75px;
+    height: 75px;
+    animation: spin 1.8s linear infinite;
+  }
+
+  .circle-css {
+    animation: spin-dash 1.5s ease-in-out infinite;
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: 0;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -40px;
+  }
+
+  to {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -120px;
+  }
+}
