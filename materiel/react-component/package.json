@@ -10,9 +10,10 @@
   },
   "main": "lib/index.js",
   "module": "es/index.js",
-  "repository": {
-    "type": "git",
-    "url": ""
+  "scripts": {
+    "build": "yarn compile && yarn compile:es",
+    "compile": "ncp src lib && BABEL_ENV=common babel lib -d lib",
+    "compile:es": "ncp src es && BABEL_ENV=es babel es -d es"
   },
   "dependencies": {
     "@mini-case/utils": "1",
@@ -23,6 +24,9 @@
     "rc-animate": "^2.8.0"
   },
   "devDependencies": {
+    "@babel/cli": "7",
+    "@mini-case/babel-preset": "1",
+    "ncp": "2",
     "prop-types": "15",
     "react": "15",
     "react-dom": "15",
@@ -34,14 +38,7 @@
     "react": "15",
     "react-dom": "15"
   },
-  "engines": {
-    "node": ">= 8.10.0"
-  },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org"
-  },
-  "lint-staged": {
-    "*.js": "eslint",
-    "*.less": "stylelint --syntax less"
+    "access": "public"
   }
 }

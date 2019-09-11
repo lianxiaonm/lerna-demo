@@ -1,7 +1,20 @@
 #!/usr/bin/env node -r esm
 
+import consola from 'consola'
+
+import Package from './package.js'
+
 async function main() {
-  console.log('--build--')
+  const rootPackage = new Package()
+  const workspacePackages = await rootPackage.getWorkspacePackages()
+
+  // Step 1: Build packages
+  // eslint-disable-next-line no-restricted-syntax
+  for (const workspace of workspacePackages) {
+    const pkgInfo = workspace.pkg
+    const scripts = pkgInfo.scripts || {}
+    if (scripts.build) workspace.build()
+  }
 }
 
 main().catch((error) => {

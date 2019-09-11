@@ -30,12 +30,9 @@
     "pkg": "node -r esm ./scripts/package"
   },
   "devDependencies": {
-    "@babel/cli": "7",
-    "@babel/core": "7",
     "@mini-case/babel-preset": "1",
     "@mini-case/eslint-config": "1",
     "@mini-case/solution-react": "1",
-    "babel-core": "^7.0.0-bridge.0",
     "colors": "1",
     "consola": "2",
     "eslint": "5",
@@ -52,6 +49,7 @@
     "node": ">= 8.10.0"
   },
   "publishConfig": {
+    "access": "public",
     "registry": "https://registry.npmjs.org"
   },
   "lint-staged": {

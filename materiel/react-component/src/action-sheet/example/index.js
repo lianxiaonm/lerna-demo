@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, ActionSheet } from '../../index'
+import { Alert, ActionSheet } from '@mini-case/react-component'
 
 const items = ['亚瑟', '诸葛亮', '白起']
 

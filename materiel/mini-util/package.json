@@ -9,6 +9,14 @@
     "url": ""
   },
   "main": "lib/index.js",
+  "scripts": {
+    "build": "yarn compile",
+    "compile": "BABEL_ENV=common babel src -d lib"
+  },
+  "devDependencies": {
+    "@babel/cli": "7",
+    "@mini-case/babel-preset": "1"
+  },
   "publishConfig": {
     "access": "public"
   }
