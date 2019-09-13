@@ -1,7 +1,5 @@
 #!/usr/bin/env node -r esm
-
 import consola from 'consola'
-
 import Package from './package.js'
 
 async function main() {
@@ -15,6 +13,7 @@ async function main() {
     const scripts = pkgInfo.scripts || {}
     if (scripts.build) workspace.build()
   }
+  // Step 2:
 }
 
 main().catch((error) => {

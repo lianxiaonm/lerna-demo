@@ -19,6 +19,7 @@
   ],
   "scripts": {
     "build": "yarn clean && yarn pkg",
+    "changelog": "node -r esm scripts/changelog.js",
     "clean": "yarn clean:es && yarn clean:lib",
     "clean:es": "rimraf materiel/*/es",
     "clean:lib": "rimraf materiel/*/lib",
