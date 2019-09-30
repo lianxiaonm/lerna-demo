@@ -4,6 +4,7 @@ exports.safeRequire = path => {
   try {
     return require(path)
   } catch (err) {
+    console.error(err)
     return { }
   }
 }

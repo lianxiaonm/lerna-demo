@@ -1,0 +1,50 @@
+{
+  "name": "@mini-case/mc-extension-webpack",
+  "version": "1.0.7",
+  "license": "MIT",
+  "description": "webpack commander",
+  "author": {
+    "name": "lianxiao.nm",
+    "email": "lianxiao.nm@gmail.com",
+    "url": ""
+  },
+  "main": "src/index.js",
+  "dependencies": {
+    "@babel/runtime": "7",
+    "@mini-case/babel-preset": "1",
+    "autoprefixer": "8",
+    "babel-loader": "8",
+    "babel-runtime": "6",
+    "case-sensitive-paths-webpack-plugin": "2",
+    "chokidar": "3",
+    "css-loader": "0",
+    "es6-promise": "4",
+    "extend2": "1",
+    "extract-text-webpack-plugin": "3",
+    "file-loader": "2",
+    "friendly-errors-webpack-plugin": "1",
+    "global-dirs": "1",
+    "html-webpack-plugin": "3",
+    "ip": "1",
+    "less": "3",
+    "less-loader": "5",
+    "portfinder": "1",
+    "postcss-loader": "2",
+    "progress-bar-webpack-plugin": "1",
+    "regenerator-runtime": "0",
+    "resolve": "1",
+    "serialize-javascript": "1",
+    "style-loader": "0",
+    "uglifyjs-webpack-plugin": "1",
+    "url-loader": "1",
+    "urllib": "2",
+    "webpack": "3",
+    "webpack-dev-server": "2",
+    "webpack-livereload-plugin": "2",
+    "webpack-mild-compile": "",
+    "write-json-file": "3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

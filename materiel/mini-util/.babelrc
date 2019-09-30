@@ -1,9 +1,0 @@
-{
-  "env": {
-    "common": {
-      "presets": [
-        "@mini-case/babel-preset"
-      ]
-    }
-  }
-}

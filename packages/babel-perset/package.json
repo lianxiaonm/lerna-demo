@@ -33,9 +33,6 @@
     "@babel/preset-stage-0": "7",
     "babel-core": "^7.0.0-bridge.0"
   },
-  "devDependencies": {
-    "@mini-case/eslint-config": "1"
-  },
   "publishConfig": {
     "access": "public"
   }
