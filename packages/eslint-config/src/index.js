@@ -7,7 +7,8 @@ module.exports = {
     jest: true
   },
   globals: {
-    solution: false
+    solution: false,
+    __webpack_require__: false
   },
   rules: {
     semi: [2, 'never'],

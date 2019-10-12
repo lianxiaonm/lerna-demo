@@ -29,15 +29,15 @@
   },
   "devDependencies": {
     "prop-types": "15",
-    "react": "15",
-    "react-dom": "15",
+    "react": "16",
+    "react-dom": "16",
     "react-router": "4",
     "react-router-dom": "4"
   },
   "peerDependencies": {
     "prop-types": "15",
-    "react": "15",
-    "react-dom": "15"
+    "react": "16",
+    "react-dom": "16"
   },
   "publishConfig": {
     "access": "public"

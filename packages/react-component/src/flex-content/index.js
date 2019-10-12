@@ -28,7 +28,7 @@ class FlexContent extends RefsComponent {
     this.setState({ expanding: !expanding })
   }
 
-  updateStype = () => {
+  updateStyle = () => {
     const { line } = this.props
     const { expanding } = this.state
     const { content } = this.$refs
@@ -38,7 +38,7 @@ class FlexContent extends RefsComponent {
   }
 
   componentDidMount() {
-    this.updateStype()
+    this.updateStyle()
     const { content } = this.$refs
     if (content instanceof Element) {
       const { offsetHeight, scrollHeight } = content
@@ -48,7 +48,7 @@ class FlexContent extends RefsComponent {
     }
   }
 
-  componentDidUpdate() { this.updateStype() }
+  componentDidUpdate() { this.updateStyle() }
 
   render() {
     const { content, expandText, retractText } = this.props

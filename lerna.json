@@ -8,10 +8,7 @@
     }
   },
   "packages": [
-    "packages/*",
-    "plugin/*",
-    "solution/*",
-    "materiel/*"
+    "packages/*"
   ],
   "changelog": {
     "labels": {

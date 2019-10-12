@@ -11,16 +11,11 @@
     "url": ""
   },
   "workspaces": [
-    "packages/*",
-    "extension/*",
-    "plugin/*",
-    "solution/*",
-    "materiel/*"
+    "packages/*"
   ],
   "scripts": {
     "start": "lerna bootstrap",
     "build": "yarn clean && lerna run build",
-    "changelog": "node -r esm scripts/changelog.js",
     "rm": "rimraf node_modules && lerna clean",
     "clean": "rimraf packages/*/es && rimraf packages/*/lib",
     "postinstall": "lerna link",

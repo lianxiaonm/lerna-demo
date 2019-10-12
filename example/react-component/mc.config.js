@@ -1,7 +1,9 @@
 module.exports = {
-  plugins: [],
+  plugins: [
+    require.resolve('./mc-plugin-require'),
+  ],
   config: {
-    react: { inferno: false, latest: true },
+    react: { inferno: false },
     code: { barcode: true },
   },
   page: {

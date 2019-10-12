@@ -1,5 +1,5 @@
 const path = require('path')
-const cp = require('child_process')
+// const cp = require('child_process')
 const portfinder = require('portfinder')
 
 const isEmpty = x => [null, undefined].indexOf(x) !== -1
@@ -62,10 +62,10 @@ exports.openUrl = (port, publicPath) => {
     url: `http://${hostname}:${port}${path.join(publicPath, devPath)}`,
     query,
   })
-  const child = cp.spawn('open', [url])
-  child.on('exit', () => {
-    console.info('\n-------------------------------'.rainbow)
-    console.info(`URL: ${url}`.cyan)
-    console.info('-------------------------------\n'.rainbow)
-  })
+  // const child = cp.spawn('open', [url])
+  // child.on('exit', () => {
+  console.info('\n-------------------------------'.rainbow)
+  console.info(`URL: ${url}`.cyan)
+  console.info('-------------------------------\n'.rainbow)
+  // })
 }

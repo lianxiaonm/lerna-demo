@@ -19,8 +19,8 @@
     "inferno-compat": "7",
     "inferno-devtools": "7",
     "prop-types": "15",
-    "react": "15",
-    "react-dom": "15"
+    "react": "16",
+    "react-dom": "16"
   },
   "publishConfig": {
     "access": "public"

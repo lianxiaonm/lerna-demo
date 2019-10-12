@@ -4,11 +4,17 @@ const soluConfig = require('./solu.config')
 
 let post = (config) => config
 
-const postCwd = appConfig.post || soluConfig.post
+let postFunc = appConfig.post || soluConfig.post
 
-if (postCwd) {
-  const postFunc = safeRequire(postCwd)
-  if (typeof postFunc === 'function') post = postFunc
-}
+let isBreak = false
+do {
+  const isFunc = typeof postFunc === 'function'
+  isBreak = isFunc || !postFunc
+  if (isFunc) post = postFunc
+  if (typeof postFunc === 'string') {
+    postFunc = safeRequire(postFunc)
+  }
+} while (!isBreak)
+
 
 module.exports = post
