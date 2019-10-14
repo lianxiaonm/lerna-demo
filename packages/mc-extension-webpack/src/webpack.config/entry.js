@@ -1,8 +1,8 @@
 // webpack entry config
-const { getPage, assign, getCommonEntry } = require('../util')
+const { assign, getCommonEntry, getPageConfig } = require('../util')
 const { runTimes } = require('../config/webpack')
 
-const page = getPage()
+const { page, chunks } = getPageConfig()
 
 module.exports = option => {
   const { watch, hostname, port } = option
@@ -12,11 +12,10 @@ module.exports = option => {
   const baseEntry = webpackHot ? [
     `webpack-dev-server/client?http://${hostname}:${port}`,
     'webpack/hot/dev-server',
-  ] : []
+    ...runTimes,
+  ] : [...runTimes]
 
-  return Object.keys(page)
-    .reduce((entry, name) => assign(entry, {
-      [name]: baseEntry.concat(runTimes)
-        .concat(page[name].entry),
-    }, false), getCommonEntry())
+  return chunks.reduce((entry, name) => assign(entry, {
+    [name]: baseEntry.concat(page[name].entry),
+  }, false), getCommonEntry())
 }

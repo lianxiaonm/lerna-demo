@@ -3,7 +3,6 @@ const cp = require('child_process')
 const chokidar = require('chokidar')
 const resolve = require('resolve')
 const webpack = require('webpack')
-const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 
 const post = require('../config/post')
 
@@ -12,7 +11,7 @@ const { buildCallback, log, getPort } = require('./util')
 module.exports = async option => {
   const {
     outputPath = 'dist', publicPath = '',
-    watch = false, mode = '', hash = true,
+    watch = false, mod = '', hash = true,
   } = option
 
   // set env
@@ -21,7 +20,7 @@ module.exports = async option => {
   if (watch) {
     livereloadPort = await getPort(livereloadPort)
     process.env.NODE_ENV = 'development'
-    process.env.MODE = mode
+    process.env.$MOD = mod
   } else {
     process.env.NODE_ENV = 'production'
   }
@@ -34,8 +33,6 @@ module.exports = async option => {
   const webpackConfig = [].concat(post(originalConfig, option))
 
   const compiler = webpack(webpackConfig)
-
-  compiler.apply(new ProgressBarPlugin())
 
   // build(watch)
   const { scripts = {} } = require(resolve.sync('./package.json', { basedir: process.cwd() }))

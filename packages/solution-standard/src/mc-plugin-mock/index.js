@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-  disable: process.env.MODE !== 'mock',
+  disable: process.env.$MOD !== 'mock',
   option: { entry: './mock/index.js' },
   apply(expand) {
     const { entry } = expand.config.mock

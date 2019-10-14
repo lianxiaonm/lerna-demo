@@ -4,21 +4,20 @@
 const ip = require('ip')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const { Plugin: WebpackMildCompile } = require('webpack-mild-compile')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+
+// webpack 4 css plugin
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin')
 
 const { env, plugins, heads, bodies, extend } = require('../config/webpack')
-const {
-  getEnv, getPage, getChunkName, assign,
-  getCommonChunk, isEmpty,
-} = require('../util')
+const { getEnv, getChunkName, getPageConfig, getCommonEntry } = require('../util')
 
-const page = getPage()
-
-const chunks = Object.keys(page)
+const { page, chunks } = getPageConfig()
 
 const {
   disableCommonChunk = false,
@@ -26,45 +25,28 @@ const {
   hashDigestLength = 8,
 } = extend
 
+const template = require.resolve('./template.ejs')
 
 module.exports = option => {
   const { watch, livereloadPort } = option
+
   const filename = getChunkName(option)
-  const template = require.resolve('./template.ejs')
 
-  const isCommomChunk = !disableCommonChunk && chunks.length >= 2
+  const isCommonChunk = !disableCommonChunk && chunks.length > 1
 
-  const assignChunk = assign({
-    vendor: { chunks: true, minChunks: 2 },
-  }, getCommonChunk(), false)
+  const commonEntry = getCommonEntry()
 
-  const commonChunks = Object.keys(assignChunk).slice(1)
-
-  const vendors = isCommomChunk ? ['vendor'] : []
-
-  // 共有文件的打包
-  commonChunks.concat(vendors).forEach((name, key) => {
-    const { minChunks } = assignChunk[name]
-    plugins.push(new webpack.optimize.CommonsChunkPlugin({
-      name, filename: `${filename}.js`,
-      chunks: key ? chunks : undefined,
-      minChunks: isEmpty(minChunks) ? Infinity : minChunks,
-    }))
-  })
-
-  const htmlChunk = commonChunks.concat(vendors)
+  const htmlChunk = isCommonChunk ? [
+    'manifest', ...Object.keys(commonEntry), 'vendor',
+  ] : ['manifest', ...Object.keys(commonEntry)]
 
   const htmlWebpackPlugins = chunks.map(chunkName => {
-    const {
-      title = '',
-      heads: _heads,
-      bodies: _bodies,
-    } = page[chunkName]
+    const { title = '', heads: _heads, bodies: _bodies } = page[chunkName]
     return new HtmlWebpackPlugin({
       inject: 'body',
       template, title,
       filename: `${chunkName}.html`,
-      chunks: htmlChunk.concat([chunkName]),
+      chunks: htmlChunk.concat(chunkName),
       // chunks 排序
       chunksSortMode(chunk1, chunk2) {
         const orderChunk = htmlChunk.concat([chunkName])
@@ -77,46 +59,45 @@ module.exports = option => {
     })
   })
 
-  if (process.env.NODE_ENV === 'production') {
+  const isProduction = process.env.NODE_ENV === 'production'
+
+  if (isProduction) {
     plugins.push(new UglifyJsPlugin({
       uglifyOptions: {
-        compress: {
-          warnings: false,
-          comparisons: false,
-        },
-        output: {
-          comments: false,
-          ascii_only: true,
-        },
+        compress: { warnings: false, comparisons: false },
+        output: { comments: false, ascii_only: true },
       },
     }))
     plugins.push(new webpack.HashedModuleIdsPlugin({ hashDigestLength }))
   } else {
-    plugins.push(new WebpackMildCompile())
+    plugins.push(
+      new WebpackMildCompile(),
+      // build watch
+      watch ? new LiveReloadPlugin({
+        hostname: ip.address(), port: livereloadPort,
+        appendScriptTag: true, delay: 500,
+      }) : new webpack.HotModuleReplacementPlugin(),
+    )
+  }
 
-    if (watch) {
-      plugins.push(new LiveReloadPlugin({
-        hostname: ip.address(),
-        port: livereloadPort,
-        appendScriptTag: true,
-        delay: 500,
-      }))
-    } else {
-      plugins.push(
-        new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-      )
-    }
+  if (!disableExtractText && (isProduction || watch)) {
+    // less css 文件处理
+    plugins.unshift(
+      new MiniCssExtractPlugin({ filename: `${filename}.css` }),
+      // 压缩css
+      new OptimizeCssPlugin({
+        assetNameRegExp: /\.style\.css\.less$/g,
+        cssProcessor: require('cssnano'),
+        cssProcessorOptions: { discardComments: { removeAll: true } },
+        canPrint: true,
+      }),
+    )
   }
 
   return [
-    new ExtractTextPlugin({
-      // devServer 时候，样式内联可以开启 hot-loader
-      disable: disableExtractText || (process.env.NODE_ENV === 'development' && !watch),
-      filename: `${filename}.css`,
-    }),
     new webpack.DefinePlugin(getEnv(env)),
     new CaseSensitivePathsPlugin(),
+    new ProgressBarPlugin({ summary: isProduction || watch }),
     ...htmlWebpackPlugins,
     ...plugins,
   ]

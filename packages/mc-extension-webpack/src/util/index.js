@@ -16,6 +16,15 @@ exports.getPage = () => {
   return Object.keys(wPage).length ? wPage : page
 }
 
+exports.getPageConfig = () => {
+  const { page: wPage } = webpack
+  const nextPage = Object.keys(wPage).length ? wPage : page
+  return {
+    page: nextPage,
+    chunks: Object.keys(nextPage),
+  }
+}
+
 const assign = (target, source, override = true) => {
   Object.keys(source).forEach(key => {
     if (Object.prototype.hasOwnProperty.call(target, key) && !override) {
@@ -41,22 +50,17 @@ exports.getChunkName = (option) => {
 
 exports.getCommonEntry = () => {
   const { polyfills, commonEntry } = webpack
-  return assign({
-    manifest: require.resolve('../manifest'),
-    polyfills,
-  }, commonEntry.reduce((entrys, source) => {
-    const { key, entry } = source
-    return assign(entrys, { [key]: entry })
-  }, {}), false)
-}
-
-exports.getCommonChunk = () => {
-  const { commonEntry } = webpack
-  return assign({
-    manifest: { minChunks: Infinity },
-    polyfills: { minChunks: Infinity },
-  }, commonEntry.reduce((entrys, source) => {
-    const { key, minChunks } = source
-    return assign(entrys, { [key]: { minChunks } })
-  }, {}), false)
+  const nextEntry = assign(
+    { manifest: '', polyfills, vendor: '' },
+    commonEntry.reduce((next, source) => {
+      const { key, entry } = source
+      return assign(next, { [key]: entry })
+    }, {}),
+    false,
+  )
+  // 保留manifest的入口文件为runtimeChunk
+  delete nextEntry.manifest
+  // 保留vendor为commonChunk文件
+  delete nextEntry.vendor
+  return nextEntry
 }

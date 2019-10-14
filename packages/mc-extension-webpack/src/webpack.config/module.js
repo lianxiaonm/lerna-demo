@@ -7,13 +7,12 @@ const { rules, extend } = require('../config/webpack')
 const { disableExtractText = false } = extend
 
 module.exports = option => {
-  const { watch } = option
   if (process.env.NODE_ENV === 'development') {
     return {
       strictExportPresence: true,
       rules: [
         ...scriptRule(({ cacheDirectory: true, compact: 'auto' })),
-        ...styleRule({ inline: !watch, minimize: false, sourceMap: true }),
+        ...styleRule({ inline: !option.watch, sourceMap: true }),
         ...rules,
       ],
     }
@@ -22,7 +21,7 @@ module.exports = option => {
     strictExportPresence: true,
     rules: [
       ...scriptRule({ cacheDirectory: false, compact: true }),
-      ...styleRule({ inline: disableExtractText, minimize: true, sourceMap: false }),
+      ...styleRule({ inline: disableExtractText, sourceMap: false }),
       ...rules,
     ],
   }

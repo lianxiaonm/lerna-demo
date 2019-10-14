@@ -1,5 +1,6 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const autoprefixer = require('autoprefixer')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
 const {
   babelPlugins, postcssPlugins,
   extend, browsers: wBrowsers,
@@ -29,44 +30,33 @@ exports.scriptRule = ({ cacheDirectory, compact }) => [{
   },
 }]
 
-exports.styleRule = ({ inline, minimize, sourceMap }) => {
-  let cssLoader = [{
+exports.styleRule = ({ inline, sourceMap }) => {
+  const cssLoader = [{
     loader: require.resolve('css-loader'),
-    options: { minimize, sourceMap, importLoaders: 1 },
+    options: { sourceMap, importLoaders: 1 },
   }, {
     loader: require.resolve('postcss-loader'),
     options: {
-      ident: 'postcss',
-      sourceMap,
-      plugins: [
+      ident: 'postcss', sourceMap, plugins: [
         autoprefixer({ browsers }),
         ...postcssPlugins,
       ],
     },
   }]
-  let lessLoader = [...cssLoader, {
+  const lessLoader = [...cssLoader, {
     loader: require.resolve('less-loader'),
     options: { sourceMap, modifyVars: theme },
   }]
-  if (!inline) {
-    cssLoader = ExtractTextPlugin.extract({ use: cssLoader })
-    lessLoader = ExtractTextPlugin.extract({ use: lessLoader })
-  } else {
-    const styleLoader = {
-      loader: require.resolve('style-loader'),
-      options: {
-        sourceMap,
-        // ensure hot css loads before js
-        singleton: true,
-      },
-    }
-    cssLoader = [styleLoader, ...cssLoader]
-    lessLoader = [styleLoader, ...lessLoader]
+  const oneLoader = !inline ? {
+    loader: MiniCssExtractPlugin.loader,
+  } : {
+    loader: require.resolve('style-loader'),
+    options: { injectType: 'singletonStyleTag' },
   }
 
   return [{
-    test: /\.css$/, loader: cssLoader,
+    test: /\.css$/, loader: [oneLoader, ...cssLoader],
   }, {
-    test: /\.less$/, loader: lessLoader,
+    test: /\.less$/, loader: [oneLoader, ...lessLoader],
   }]
 }
