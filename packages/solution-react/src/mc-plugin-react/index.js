@@ -32,6 +32,7 @@ module.exports = {
         entry: ['react', 'react-dom'],
       })
     }
+    expand.addPolyfill(require.resolve('prop-types'))
 
     if (!isProd && devtools) {
       expand.addHead(['<script src="http://localhost:8097"></script>'])
