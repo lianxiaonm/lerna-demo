@@ -16,6 +16,7 @@
   "scripts": {
     "start": "lerna bootstrap",
     "build": "yarn clean && lerna run build",
+    "watch": "lerna run watch --stream --parallel",
     "rm": "rimraf node_modules && lerna clean",
     "clean": "rimraf packages/*/es && rimraf packages/*/lib",
     "postinstall": "lerna link",

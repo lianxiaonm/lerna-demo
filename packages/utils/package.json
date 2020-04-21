@@ -13,8 +13,8 @@
     "lib"
   ],
   "scripts": {
-    "build": "yarn compile",
-    "compile": "BABEL_ENV=common babel src -d lib"
+    "build": "yarn compile:lib",
+    "compile:lib": "BABEL_ENV=common babel src -d lib"
   },
   "publishConfig": {
     "access": "public"

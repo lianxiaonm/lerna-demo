@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import Modal from '../modal'
@@ -6,36 +6,33 @@ import './style.less'
 
 const { string, func } = PropTypes
 
-class Alert extends PureComponent {
-  static propTypes = {
-    title: string,
-    content: string,
-    buttonText: string,
-    cb: func,
-  }
+const Alert = ({
+  title,
+  content,
+  buttonText = '确定',
+  cb = () => false,
+}) => {
+  const [visible, setVisible] = useState(false)
+  useEffect(() => { setVisible(true) }, [])
+  const onClose = useCallback((e) => {
+    e.stopPropagation()
+    setVisible(false)
+    setTimeout(cb, 200)
+  }, [cb])
 
-  static defaultProps = {
-    buttonText: '确定',
-  }
-
-  state = { visible: true }
-
-  onClose = () => {
-    const { cb } = this.props
-    this.setState({ visible: false }, cb)
-  }
-
-  render() {
-    const { title, content, buttonText } = this.props
-    const { visible } = this.state
-    return (
-      <Modal className="mica-alert" visible={visible} spaceClose={false}>
-        {title && <span>{title}</span>}
-        {content && <span>{content}</span>}
-        <a className="btn" onClick={this.onClose}>{buttonText}</a>
-      </Modal>
-    )
-  }
+  return (
+    <Modal className="mica-alert" visible={visible} spaceClose={false}>
+      {title && <span>{title}</span>}
+      {content && <span>{content}</span>}
+      <a className="btn" onClick={onClose}>{buttonText}</a>
+    </Modal>
+  )
+}
+Alert.propTypes = {
+  title: string,
+  content: string,
+  buttonText: string,
+  cb: func,
 }
 
 Alert.show = (param, cb) => {
