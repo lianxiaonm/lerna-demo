@@ -1,3 +1,4 @@
+/* eslint-disable */
 module.exports = {
   extends: 'airbnb',
   parser: 'babel-eslint',
@@ -53,6 +54,9 @@ module.exports = {
     "react/destructuring-assignment": 0,
     "react/jsx-one-expression-per-line": 0,
     'react/jsx-max-props-per-line': 0,
+    'react/jsx-props-no-spreading': 0,
+    'react/static-property-placement': 0,
+    'react/state-in-constructor': 0,
     'prefer-rest-params': 0,
     'operator-linebreak': 0,
     'lines-between-class-members': 0

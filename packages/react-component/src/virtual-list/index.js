@@ -1,9 +1,8 @@
-import React, {
-  useRef, useState, useCallback, useEffect,
-} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { VariableSizeList as List } from 'react-window'
 import { WindowScroller } from 'react-virtualized'
+import RefsComponent from '../refs-component'
 import EmptyPage from '../empty-page'
 
 import './style.less'
@@ -12,72 +11,81 @@ const { string, bool, object, array, number, func, node } = PropTypes
 
 const defaultSize = () => 80
 
-const VirtualList = ({
-  selector,
-  serverHeight = 500,
-  itemData = [],
-  loading = false,
-  getListProps = config => config,
-  emptyNode = <EmptyPage content="no data" iconHeight="120px" />,
-  style = { },
-  children,
-}) => {
-  const listRef = useRef(null)
+class VirtualList extends RefsComponent {
+  static propTypes = {
+    selector: string,
+    serverHeight: number,
+    itemData: array,
+    loading: bool,
+    getListProps: func,
+    emptyNode: node,
+    children: node,
+    style: object,
+  }
 
-  const handleScroll = useCallback(({ scrollTop }) => {
-    if (!listRef || !listRef.current) return
-    listRef.current.scrollTo(scrollTop)
-  }, [])
+  static defaultProps = {
+    style: { },
+    itemData: [],
+    serverHeight: 500,
+    getListProps: config => config,
+    emptyNode: <EmptyPage content="no data" iconHeight="120px" />,
+  }
 
-  const isEmpty = !loading && !itemData.length
+  state = { scrollElement: undefined }
 
-  const [scrollElement, setElement] = useState()
+  handleScroll = ({ scrollTop }) => {
+    const { listRef } = this.$refs
+    if (listRef) listRef.scrollTo(scrollTop)
+  }
 
-  useEffect(() => {
-    if (!selector) setElement(window)
-    else setElement(document.querySelector(selector))
-  }, [selector])
+  setScrollEl = () => {
+    const { selector } = this.props
+    const scrollElement = !selector ? window : document.querySelector(selector)
+    this.setState({ scrollElement })
+  }
+  componentDidUpdate(prevProps) {
+    const { selector } = this.props
+    if (prevProps.selector !== selector) this.setScrollEl()
+  }
 
-  const renderFn = useCallback(({ index, style: rowStyle, data }) => (
+  componentDidMount() {
+    this.setScrollEl()
+  }
+
+  renderRow = ({ index, style: rowStyle, data }) => (
     <div className="mica-virtual-row" style={rowStyle}>
-      { React.cloneElement(children, data[index]) }
-    </div>
-  ), [])
-
-  return (
-    <div className="mica-virtual-list" style={{ minHeight: serverHeight, ...style }}>
-      {!isEmpty ? (
-        <WindowScroller scrollingResetTimeInterval={100 / 3}
-          scrollElement={scrollElement} onScroll={handleScroll}>
-          {({ height }) => (
-            <List ref={listRef}
-              itemData={itemData}
-              itemSize={defaultSize}
-              itemCount={itemData.length}
-              {...getListProps({
-                width: '100%',
-                height: Math.max(serverHeight, height),
-                style: { height: scrollElement ? '100%' : serverHeight },
-              })}>
-              { renderFn }
-            </List>
-          )}
-        </WindowScroller>
-      ) : emptyNode}
+      { React.cloneElement(this.props.children, data[index]) }
     </div>
   )
-}
 
-VirtualList.propTypes = {
-  selector: string,
-  serverHeight: number,
-  itemData: array,
-  loading: bool,
-  actionLoading: bool,
-  getListProps: func,
-  emptyNode: node,
-  children: node,
-  style: object,
-}
+  render() {
+    const { serverHeight, itemData, loading, getListProps, emptyNode, style } = this.props
+    const { scrollElement } = this.state
 
-export default React.memo(VirtualList)
+    const isEmpty = !loading && !itemData.length
+
+    return (
+      <div className="mica-virtual-list" style={{ minHeight: serverHeight, ...style }}>
+        {!isEmpty ? (
+          <WindowScroller scrollElement={scrollElement}
+            scrollingResetTimeInterval={100 / 3}
+            onScroll={this.handleScroll}>
+            {({ height }) => (
+              <List ref={this.setRefs('listRef')}
+                itemData={itemData}
+                itemSize={defaultSize}
+                itemCount={itemData.length}
+                {...getListProps({
+                  width: '100%',
+                  height: Math.max(serverHeight, height),
+                  style: { height: scrollElement ? '100%' : serverHeight },
+                })}
+                children={this.renderRow} />
+            )}
+          </WindowScroller>
+        ) : emptyNode}
+      </div>
+    )
+  }
+}
+export default VirtualList

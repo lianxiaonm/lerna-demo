@@ -19,7 +19,7 @@ class ModalExample extends PureComponent {
 
     return (
       <div className="drawer-example">
-        <div onClick={this.showDrawer}>倔强青铜</div>
+        <div data-type="btn" onClick={this.showDrawer}>倔强青铜</div>
         <Drawer visible={visible} onClose={this.onClose}>
           <h1>王者荣耀</h1>
           <LazyLoad image={luban} />

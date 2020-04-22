@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import Drawer from '../drawer'
@@ -6,46 +6,61 @@ import './style.less'
 
 const { arrayOf, string, number, func } = PropTypes
 
-const ActionSheet = ({
-  title,
-  items,
-  cancelButtonText = '取消',
-  destructiveBtnIndex = -1,
-  cb = () => false,
-}) => {
-  const [visible, setVisible] = useState(false)
-  useEffect(() => { setVisible(true) }, [])
-  const sheetSelect = useCallback((i) => {
-    const index = i < items.length ? i : -1
-    return (e) => {
-      e.stopPropagation()
-      setVisible(false)
-      setTimeout(() => cb({ index }), 200)
-    }
-  }, [items, cb])
+class ActionSheet extends PureComponent {
+  static propTypes = {
+    title: string,
+    items: arrayOf(string).isRequired,
+    cancelButtonText: string,
+    destructiveBtnIndex: number, // 默认高亮的选项
+    cb: func,
+  }
 
-  return (
-    <Drawer visible={visible}
-      className="mica-action-sheet"
-      backgroundColor="rgba(0, 0, 0, 0.1)"
-      onClose={sheetSelect(-1)}>
-      {title && <h1>{title}</h1>}
-      {items.concat(cancelButtonText).map((btn, i) => (
+  static defaultProps = {
+    cancelButtonText: '取消',
+    destructiveBtnIndex: -1,
+    cb: () => {},
+  }
+
+  state = { visible: false }
+
+  sheetSelect = i => e => {
+    e.stopPropagation()
+    const { items, cb } = this.props
+    const index = i < items.length ? i : -1
+    this.setState({ visible: false }, () => cb({ index }))
+  }
+
+  onClose = () => {
+    const { cb } = this.props
+    this.setState({ visible: false }, () => cb({ index: -1 }))
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ visible: true }), 0)
+  }
+
+  render() {
+    const { title, items, cancelButtonText, destructiveBtnIndex } = this.props
+    const { visible } = this.state
+    const btnList = items.concat(cancelButtonText)
+      .map((btn, i) => (
         <span key={i}
           data-cancelbtn={cancelButtonText === btn}
           data-active={destructiveBtnIndex === i}
-          onClick={sheetSelect(i)} children={btn} />
-      ))}
-    </Drawer>
-  )
-}
+          onClick={this.sheetSelect(i)}>{btn}
+        </span>
+      ))
 
-ActionSheet.propTypes = {
-  title: string,
-  items: arrayOf(string).isRequired,
-  cancelButtonText: string,
-  destructiveBtnIndex: number, // 默认高亮的选项
-  cb: func,
+    return (
+      <Drawer className="mica-action-sheet"
+        visible={visible}
+        backgroundColor="rgba(0, 0, 0, 0.1)"
+        onClose={this.onClose}>
+        {title && <h1>{title}</h1>}
+        {btnList}
+      </Drawer>
+    )
+  }
 }
 
 ActionSheet.show = (param, cb) => {

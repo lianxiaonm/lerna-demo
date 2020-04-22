@@ -19,7 +19,7 @@ function onClick() {
 }
 
 export default (
-  <div className="example">
-    <div onClick={onClick}>倔强青铜</div>
+  <div className="preview-example">
+    <div data-type="btn" onClick={onClick}>倔强青铜</div>
   </div>
 )

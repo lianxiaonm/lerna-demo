@@ -19,7 +19,7 @@ class ModalExample extends PureComponent {
 
     return (
       <div className="modal-example">
-        <div onClick={this.showModal}>倔强青铜</div>
+        <div data-type="btn" onClick={this.showModal}>倔强青铜</div>
         <Modal visible={visible} onClose={this.onClose} container=".modal > div">
           <section className="modal">
             <h1>王者荣耀</h1>

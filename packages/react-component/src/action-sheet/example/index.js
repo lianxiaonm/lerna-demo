@@ -22,6 +22,6 @@ function onClick() {
 
 export default (
   <div className="action-sheet-example">
-    <span onClick={onClick}>选择英雄</span>
+    <span data-type="btn" onClick={onClick}>选择英雄</span>
   </div>
 )

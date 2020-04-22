@@ -8,6 +8,6 @@ function onClick() {
 
 export default (
   <div className="loading-example">
-    <div onClick={onClick}>倔强青铜（显示）</div>
+    <div data-type="btn" onClick={onClick}>倔强青铜（显示）</div>
   </div>
 )
