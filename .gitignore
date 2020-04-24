@@ -17,5 +17,5 @@ fixtures/browser/*.cmd
 package-lock.json
 
 #
-*.lock
+#*.lock
 
