@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { LoadMore, LazyLoad } from '@mini-case/react-component'
+import { LoadMore, LazyLoad, VirtualList } from '@mini-case/react-component'
 import './style.less'
 
 const luban = 'https://gw.alipayobjects.com/zos/rmsportal/MMcxjZvIbSUsYeSDsTSo.jpg'
@@ -25,32 +25,41 @@ const defaultHeroArr = [{
   logo: zhugeliang,
 }]
 
-class LoadmoreExample extends PureComponent {
-  state = { heroArr: defaultHeroArr }
+const Column = ({ name, logo }) => {
+  return (
+    <div className="item">
+      <h1>{name}</h1>
+      <LazyLoad image={logo} shortSide round/>
+    </div>
+  )
+}
 
+class LoadMoreExample extends PureComponent {
+  state = { heroArr: defaultHeroArr }
+  
   loadMore = () => new Promise(resolve => {
     setTimeout(() => {
       const { heroArr } = this.state
       this.setState({ heroArr: [...heroArr, ...heroArr] }, resolve)
     }, 1000)
   })
-
+  
   render() {
     const { heroArr } = this.state
-    const heroList = heroArr.map(({ name, logo }, i) => (
-      <li key={i}>
-        <h1>{name}</h1>
-        <LazyLoad image={logo} shortSide round />
-      </li>
-    ))
-
     return (
       <div className="load-more-example">
-        <ul>{heroList}</ul>
-        <LoadMore showMore={this.loadMore} />
+        <VirtualList
+          itemData={heroArr}
+          getListProps={config => ({
+            ...config,
+            estimatedItemSize: 300,
+            itemSize: () => 300
+          })}
+          children={<Column/>}/>
+        <LoadMore showMore={this.loadMore}/>
       </div>
     )
   }
 }
 
-export default <LoadmoreExample />
+export default <LoadMoreExample/>

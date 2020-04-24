@@ -10,6 +10,10 @@ const keyWrapper = (blackProps = []) => InnerComponent => {
 
     state = { key: Math.random() }
 
+    // TODO
+    // static getDerivedStateFromProps(props, state) {}
+
+    // eslint-disable-next-line react/no-deprecated
     componentWillReceiveProps(nextProps) {
       const { children } = this.props
       const { children: nextChildren } = nextProps

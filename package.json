@@ -20,7 +20,6 @@
     "rm": "rimraf node_modules && lerna clean",
     "clean": "rimraf packages/*/es && rimraf packages/*/lib",
     "postinstall": "lerna link",
-    "precommit": "lint-staged",
     "lint": "npm run lint:js && npm run lint:style",
     "lint:js": "eslint .",
     "lint:style": "stylelint \"**/*.less\" --syntax less",
@@ -51,7 +50,12 @@
     "registry": "https://registry.npmjs.org"
   },
   "lint-staged": {
-    "*.js": "eslint",
+    "*.js": "eslint --fix",
     "*.less": "stylelint --syntax less"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }

@@ -1,38 +1,39 @@
-function getSubDomain() {
+import { parse, serialize } from 'cookie'
+
+const isClient = typeof window !== 'undefined'
+
+const isLegalKey = key => [undefined, null, ''].indexOf(key) === -1
+const loadCookie = () => (isClient ? parse(`${document.cookie}`) : null)
+
+let cookieSync = loadCookie()
+
+const getSubDomain = () => {
   const { hostname } = window.location
   const domains = hostname.split('.')
-  return domains.length > 2 ?
-    domains.slice(1).join('.') : hostname
+  return domains.length > 2 ? domains.slice(-2).join('.') : hostname
 }
 
 export function createCookie(
-  name, value, days = 365,
-  shouldUseSubDomain = false,
+  name, value, days = 365, isSubDomain = true,
 ) {
-  const date = new Date()
-  let expires = ''
-  if (days) {
-    // eslint-disable-next-line no-mixed-operators
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
-    expires = `; expires=${date.toGMTString()}`
-  }
-  const domain = shouldUseSubDomain ? `; domain=${getSubDomain()}` : ''
-  document.cookie = `${name}=${value}${expires}${domain}; path=/`
+  if (!isClient || isLegalKey(name)) return
+  cookieSync[name] = value
+  const writeCookie = serialize(name, value, {
+    path: '/',
+    maxAge: 24 * 60 * 60 * days,
+    domain: isSubDomain ? getSubDomain() : undefined,
+  })
+  document.cookie = writeCookie
 }
 
-export function readCookie(name, $document) {
-  const { cookie: cookieStr } = typeof document === 'undefined'
-    ? $document || { } : document
-  const nameEQ = `${name}=`
-  let nextCookie = null
-  ;(cookieStr || '').split(';').every(ck => {
-    const $ck = (ck || '').trim()
-    if ($ck.indexOf(nameEQ)) {
-      nextCookie = $ck.slice(nameEQ.length)
-    }
-    return !nextCookie
-  })
-  return nextCookie
+export function readCookie(name, $doc) {
+  if (isLegalKey(name)) {
+    if (isClient) return cookieSync[name]
+    return parse(`${($doc || { }).cookie}`)[name]
+  }
+  return null
 }
+
+export function reloadCookie() { cookieSync = loadCookie() }
 
 export function eraseCookie(name) { createCookie(name, '', -1) }

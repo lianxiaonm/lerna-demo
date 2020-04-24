@@ -70,3 +70,28 @@ export function getImage({
     resolve(img)
   })
 }
+
+const imageCache = {}
+
+export function loadImage({
+  img, width = 0, height = 0,
+  quality = 90, shortSide = false, cut = false,
+}) {
+  return new Promise((resolve, reject) => {
+    getImage({ img, width, height, quality, shortSide, cut }).then(image => {
+      if (imageCache[image]) resolve(image)
+      else {
+        const imgEl = new Image()
+        imgEl.addEventListener('load', () => {
+          imageCache[image] = true
+          resolve(image)
+        })
+        imgEl.addEventListener('error', () => {
+          delete imageCache[image]
+          reject(new Error('image load error'))
+        })
+        imgEl.src = image
+      }
+    })
+  })
+}

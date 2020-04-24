@@ -20,7 +20,6 @@
     "compile:es": "ncp src es && BABEL_ENV=es babel src -d es"
   },
   "dependencies": {
-    "@mini-case/utils": "1",
     "immutable-component": "2",
     "jsbarcode": "3",
     "kobe-pull-element": "1",
@@ -39,7 +38,8 @@
   "peerDependencies": {
     "prop-types": "15",
     "react": "16",
-    "react-dom": "16"
+    "react-dom": "16",
+    "@mini-case/utils": "1"
   },
   "publishConfig": {
     "access": "public"

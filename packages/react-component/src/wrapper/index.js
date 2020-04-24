@@ -24,7 +24,7 @@ const wrapper = (args) => InnerComponent => {
 
     reload = (...args2) => this.loadData(...args2)
 
-    componentWillMount() { this.loadData() }
+    componentDidMount() { this.loadData() }
 
     loadData = (extra) => loadProps(this.param, extra)
       .then((data = {}) => this.setState({ data, err: null }))

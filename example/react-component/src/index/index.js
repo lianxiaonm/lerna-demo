@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import Home from '../home'
-import Layout from '../layout'
 import Component from '../component'
 
 const { object, node } = PropTypes
@@ -34,7 +33,6 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/component/:name" component={Component} />
-        <Route path="/layout" component={Layout} />
       </Switch>
     </ScrollToTop>
   </Router>

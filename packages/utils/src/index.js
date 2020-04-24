@@ -12,7 +12,7 @@ export { valueFn, NO_OP, trim, includes, toArr, toJson, fromJson, toMap, hashCod
 export { isInViewport, px2PX, rem2PX, dp2PX, PX2dp, passiveSupported, featureSupport, easeOut, scrollBy } from './dom'
 
 // image
-export { getZoom, getImage, webpFeautre } from './image'
+export { getZoom, getImage, loadImage, webpFeautre } from './image'
 
 // device
 export { version2Float, deviceDetection } from './device'
@@ -27,4 +27,4 @@ export { throttle, debounce } from './other'
 export { getParam, paramStr, buildUrl, dateFormat } from './usual'
 
 // cookies
-export { createCookie, readCookie, eraseCookie } from './cookie'
+export { createCookie, readCookie, reloadCookie, eraseCookie } from './cookie'

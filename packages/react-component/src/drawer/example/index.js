@@ -20,14 +20,16 @@ class ModalExample extends PureComponent {
     return (
       <div className="drawer-example">
         <div data-type="btn" onClick={this.showDrawer}>倔强青铜</div>
-        <Drawer visible={visible} onClose={this.onClose}>
+        <Drawer visible={visible} onClose={this.onClose} container=".drawer">
           <h1>王者荣耀</h1>
-          <LazyLoad image={luban} />
-          <LazyLoad image={miyue} />
+          <div className="drawer">
+            <LazyLoad image={luban}/>
+            <LazyLoad image={miyue}/>
+          </div>
         </Drawer>
       </div>
     )
   }
 }
 
-export default <ModalExample />
+export default <ModalExample/>

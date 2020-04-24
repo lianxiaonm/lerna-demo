@@ -118,6 +118,14 @@ export default class Modal extends RefsComponent {
     if (visible) setTimeout(Lazy.checkViewport, milliseconds * 2)
   }
 
+  componentWillUnmount() {
+    const { root } = this.$refs
+    if (root instanceof Element) {
+      root.removeEventListener('touchstart', this.handleTouchStart, false)
+      root.removeEventListener('touchmove', this.handleTouchMove, opts)
+    }
+  }
+
   getPos(e) {
     const targetEvent = e.touches[0]
     return {
