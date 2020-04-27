@@ -27,4 +27,4 @@ export { throttle, debounce } from './other'
 export { getParam, paramStr, buildUrl, dateFormat } from './usual'
 
 // cookies
-export { createCookie, readCookie, reloadCookie, eraseCookie } from './cookie'
+export { createCookie, readCookie, parseCookie, eraseCookie } from './cookie'

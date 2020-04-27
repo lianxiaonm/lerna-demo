@@ -18,8 +18,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "peerDependencies": {
-    "cookie": "^0.4.1"
   }
 }

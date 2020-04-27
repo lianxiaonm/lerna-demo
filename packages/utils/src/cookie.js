@@ -1,11 +1,5 @@
-import { parse, serialize } from 'cookie'
-
 const isClient = typeof window !== 'undefined'
-
 const isLegalKey = key => [undefined, null, ''].indexOf(key) === -1
-const loadCookie = () => (isClient ? parse(`${document.cookie}`) : null)
-
-let cookieSync = loadCookie()
 
 const getSubDomain = () => {
   const { hostname } = window.location
@@ -13,27 +7,59 @@ const getSubDomain = () => {
   return domains.length > 2 ? domains.slice(-2).join('.') : hostname
 }
 
-export function createCookie(
-  name, value, days = 365, isSubDomain = true,
-) {
-  if (!isClient || isLegalKey(name)) return
-  cookieSync[name] = value
-  const writeCookie = serialize(name, value, {
-    path: '/',
-    maxAge: 24 * 60 * 60 * days,
-    domain: isSubDomain ? getSubDomain() : undefined,
-  })
-  document.cookie = writeCookie
+function tryDecode(str) {
+  try {
+    return decodeURIComponent(str)
+  } catch {
+    return str
+  }
 }
 
-export function readCookie(name, $doc) {
+export function parseCookie(params) {
+  const { cookie: cookieStr } = isClient ? document : params || {}
+  return (cookieStr || '').split(';').reduce((result, pair) => {
+    const pairTrim = (pair || '').trim()
+    const eqIndex = pairTrim.indexOf('=')
+    if (eqIndex > 0) {
+      const key = pairTrim.slice(0, eqIndex).trim()
+      const value = pairTrim.slice(eqIndex + 1).trim()
+      // quoted values
+      result[key] = tryDecode(value[0] === '"' ? value.slice(1, -1) : value)
+    }
+    return result
+  }, {})
+}
+
+export function createCookie(name, value, days = 365, isSubDomain = true) {
+  if (!isClient || !isLegalKey(name)) return
+  const optionArr = ['path=/']
+  if (isSubDomain) {
+    optionArr.unshift(`Domain=${getSubDomain()}`)
+  }
+  if (!Number.isNaN(+days)) {
+    optionArr.unshift(`Max-Age=${Math.floor(24 * 60 * 60 * days)}`)
+  }
+  optionArr.unshift(`${name}=${encodeURIComponent(value)}`)
+  document.cookie = optionArr.join('; ')
+}
+
+export function readCookie(name, params) {
   if (isLegalKey(name)) {
-    if (isClient) return cookieSync[name]
-    return parse(`${($doc || { }).cookie}`)[name]
+    const nameEQ = `${name}=`.trim()
+    const { cookie: cookieStr } = isClient ? document : params || {}
+    const cookieList = (cookieStr || '').split(';')
+    for (let i = 0; i < cookieList.length; i++) {
+      const ckTrim = (cookieList[i] || '').trim()
+      // startWith
+      if (ckTrim.indexOf(nameEQ) === 0) {
+        const value = ckTrim.slice(nameEQ.length).trim()
+        // quoted values
+        return tryDecode(value[0] === '"' ? value.slice(1, -1) : value)
+      }
+    }
   }
   return null
 }
 
-export function reloadCookie() { cookieSync = loadCookie() }
 
 export function eraseCookie(name) { createCookie(name, '', -1) }
