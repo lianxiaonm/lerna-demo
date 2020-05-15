@@ -1,5 +1,5 @@
 import React from 'react'
-import { Sticky, VirtualList,LoadMore } from '../../'
+import { Sticky, VirtualList,LoadMore } from '@mini-case/react-component'
 import './style.less'
 
 const itemData = [...new Array(100)].map((_, index) => ({ index }))

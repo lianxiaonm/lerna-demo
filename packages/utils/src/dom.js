@@ -1,3 +1,18 @@
+import { assignTo } from './extend'
+import { deserialize } from './transfer'
+
+export function getParam() {
+  const query = deserialize(window.location.search.slice(1))
+  if (window.location.hash) {
+    const index = window.location.hash.indexOf('?')
+    if (index > -1) {
+      const hashStr = window.location.hash.slice(index + 1)
+      return assignTo(query, deserialize(hashStr))
+    }
+  }
+  return query
+}
+
 export function isInViewport(node, offset = 0, x = true) {
   const { top, right, bottom, left, width, height } = node.getBoundingClientRect()
   const { clientWidth, clientHeight } = document.documentElement

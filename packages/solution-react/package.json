@@ -10,17 +10,18 @@
   },
   "main": "src/index.js",
   "dependencies": {
-    "@mini-case/mc-extension-webpack": "1",
-    "@mini-case/react-component": "1",
+    "@mini-case/mc-extension-webpack": "^1.0.7",
     "@mini-case/solution-standard": "1",
     "babel-plugin-import": "1.13.0",
     "ejs": "2",
-    "immutable-component": "2",
     "inferno-compat": "7.4.2",
-    "inferno-devtools": "7.4.2",
-    "prop-types": "15",
-    "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "inferno-devtools": "7.4.2"
+  },
+  "peerDependencies": {
+    "@mini-case/react-component": "1",
+    "prop-types": "^15.0.0",
+    "react": "^15.0.0 | ^16.0.0",
+    "react-dom": "^15.0.0 | ^16.0.0"
   },
   "publishConfig": {
     "access": "public"

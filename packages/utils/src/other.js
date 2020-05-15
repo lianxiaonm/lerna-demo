@@ -14,7 +14,7 @@ export function debounce(fn, delay) {
 export function throttle(fn, delay) {
   let timer = null
   return function () {
-    if (!timer) {
+    if (timer !== null) {
       timer = setTimeout(() => {
         fn.apply(this, toArr(arguments))
         timer = null

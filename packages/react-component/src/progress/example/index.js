@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Progress,VirtualList } from '../../'
+import { Progress,VirtualList } from '@mini-case/react-component'
 import './style.less'
 
 const { BarLine, Circle, Numbers } = Progress

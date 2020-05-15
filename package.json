@@ -26,21 +26,21 @@
     "example:react": "cd example/react-component && yarn mock"
   },
   "devDependencies": {
-    "@babel/cli": "7.8.4",
-    "@mini-case/babel-preset": "1",
-    "@mini-case/bin": "1",
-    "@mini-case/eslint-config": "1",
-    "colors": "1",
-    "consola": "2.11.3",
-    "eslint": "6.8.0",
-    "esm": "3",
-    "husky": "4.2.5",
-    "lerna": "3.20.2",
-    "lint-staged": "10.1.6",
-    "ncp": "2",
-    "rimraf": "3.0.2",
-    "stylelint": "13.3.2",
-    "stylelint-config-standard": "20.0.0"
+    "@babel/cli": "^7.8.4",
+    "@mini-case/babel-preset": "^1.0.1",
+    "@mini-case/bin": "^1.0.2",
+    "@mini-case/eslint-config": "^1.0.4",
+    "consola": "^2.11.3",
+    "esm": "^3.2.25",
+    "husky": "^4.2.5",
+    "jest": "^26.0.1",
+    "lerna": "^3.21.0",
+    "lint-staged": "^10.1.7",
+    "ncp": "^2.0.0",
+    "react-test-renderer": "^16.13.1",
+    "rimraf": "^3.0.2",
+    "stylelint": "^13.3.2",
+    "stylelint-config-standard": "^20.0.0"
   },
   "engines": {
     "node": ">= 8.10.0"

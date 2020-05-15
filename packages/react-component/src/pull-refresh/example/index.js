@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-
 import React, { PureComponent } from 'react'
 import { PullRefresh, LazyLoad } from '@mini-case/react-component'
 import './style.less'
