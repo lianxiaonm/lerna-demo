@@ -8,14 +8,14 @@
     "email": "lianxiao.nm@gmail.com",
     "url": ""
   },
+  "sideEffects": false,
   "main": "lib/index.js",
   "files": [
     "lib"
   ],
   "scripts": {
     "build": "yarn compile:lib",
-    "compile:lib": "BABEL_ENV=common babel src -d lib",
-    "compile:es": "BABEL_ENV=es babel src -d es"
+    "compile:lib": "BABEL_ENV=common babel src -d lib"
   },
   "publishConfig": {
     "access": "public"

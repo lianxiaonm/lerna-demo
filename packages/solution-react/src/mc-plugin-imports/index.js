@@ -1,7 +1,7 @@
 const path = require('path')
 
 const baseComponents = ['@mini-case/react-component']
-const baseModules = ['immutable-component']
+const baseModules = []
 
 module.exports = {
   option: { },

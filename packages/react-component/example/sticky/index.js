@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Sticky, LazyLoad } from '@mini-case/react-component'
-import tabpanel from '../../tabs/example/tab-panel'
+import tabpanel from '../tabs/tab-panel'
 import './style.less'
 
 class StickyExample extends PureComponent {

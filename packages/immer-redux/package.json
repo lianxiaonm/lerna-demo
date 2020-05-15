@@ -1,36 +1,38 @@
 {
   "name": "@mini-case/immer-redux",
   "version": "1.0.0",
-  "description": "immer react redux",
-  "keywords": [
-    "immer",
-    "redux",
-    "react"
-  ],
-  "author": "nimin <arthur.ni>",
-  "homepage": "https://github.com/lianxiaonm/lerna-demo#readme",
   "license": "MIT",
+  "description": "immer react redux",
+  "author": {
+    "name": "lianxiao.nm",
+    "email": "lianxiao.nm@gmail.com",
+    "url": ""
+  },
+  "sideEffects": false,
   "main": "lib/index.js",
   "files": [
     "lib"
   ],
+  "scripts": {
+    "build": "yarn compile:lib",
+    "compile:lib": "BABEL_ENV=common babel src -d lib"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lianxiaonm/lerna-demo.git"
   },
+  "dependencies": {
+  },
   "devDependencies": {
     "redux": "^4.0.5",
     "react": "^16.13.1",
-    "react-redux": "^7.2.0"
+    "react-redux": "^7.2.0",
+    "@mini-case/utils": "^1.0.5"
   },
   "peerDependencies": {
     "react": "^16.0.0",
     "react-redux": "^7.0.0",
     "redux": "^4.0.0",
     "@mini-case/utils": "^1.0.5"
-  },
-  "scripts": {
-    "build": "yarn compile:lib",
-    "compile:lib": "BABEL_ENV=common babel src -d lib"
   }
 }

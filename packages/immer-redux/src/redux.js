@@ -2,7 +2,7 @@ import { createStore as create } from 'redux'
 import { immutable, lodashGet } from '@mini-case/utils'
 import { applyMiddleware } from './middle'
 
-const reducers = (current, action) => {
+function reducers(current, action) {
   const { type, payload } = action
   const keyArr = (type || '').split('.')
   if (!keyArr.length) {
@@ -17,7 +17,7 @@ const reducers = (current, action) => {
 }
 
 
-export const createStore = (initialState) => {
+export function createStore(initialState) {
   const preState = applyMiddleware(initialState)
   return create(reducers, preState)
 }

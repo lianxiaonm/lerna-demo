@@ -40,8 +40,6 @@ export function serialize(obj, split) {
     .join(split || '&')
 }
 
-export const paramStr = serialize
-
 function tryDecode(str) {
   try {
     return decodeURIComponent(str)

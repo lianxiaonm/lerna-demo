@@ -4,7 +4,8 @@ import { equals } from '@mini-case/utils'
 
 const { node } = PropTypes
 
-const keyWrapper = (blackProps = []) => InnerComponent => {
+const keyWrapper = (blackProps = []) => InnerComponent =>
+  // eslint-disable-next-line implicit-arrow-linebreak
   class OuterComponent extends PureComponent {
     static propTypes = { children: node }
 
@@ -35,8 +36,5 @@ const keyWrapper = (blackProps = []) => InnerComponent => {
       return <InnerComponent key={this.state.key} {...this.props} />
     }
   }
-
-  return OuterComponent
-}
 
 export default keyWrapper

@@ -1,10 +1,20 @@
 {
-  "version": "1.0.0",
+  "version": "independent",
   "npmClient": "yarn",
   "useWorkspaces": true,
   "command": {
     "publish": {
-      "npmClient": "npm"
+      "allowBranch": [
+        "master"
+      ]
+    },
+    "version": {
+      "allowBranch": [
+        "master",
+        "beta"
+      ],
+      "conventionalCommits": true,
+      "message": "chore(release): publish version"
     }
   },
   "packages": [

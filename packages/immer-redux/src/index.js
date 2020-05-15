@@ -7,5 +7,9 @@ export {
 } from 'react-redux'
 
 export { createStore } from './redux'
-export { useImmutable } from './hooks'
+export {
+  useImmutable,
+  useReduxGet,
+  useReduxSet,
+} from './hooks'
 export { addMiddleware } from './middle'

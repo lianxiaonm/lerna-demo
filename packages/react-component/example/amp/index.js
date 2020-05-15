@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { AMap } from '@mini-case/react-component'
+import { Amap } from '@mini-case/react-component'
 import './style.less'
 
 class AmapExample extends PureComponent {
@@ -13,7 +13,7 @@ class AmapExample extends PureComponent {
     const { iLon, iLat, desLat, desLon } = point
     return (
       <div className="example">
-        <AMap iLon={String(iLon)} iLat={String(iLat)}
+        <Amap iLon={String(iLon)} iLat={String(iLat)}
           desLon={String(desLon)} desLat={String(desLat)} />
       </div>
     )
