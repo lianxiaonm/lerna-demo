@@ -16,7 +16,7 @@ export { getZoom, webpFeautre, checkWebp, getImage, loadImage } from './image'
 export { version2Float, deviceDetection } from './device'
 
 // cookies
-export { parseCookie, createCookie, readCookie, eraseCookie } from './cookie'
+export { parseCookie, createCookie, readCookie, matchReadCookie, eraseCookie } from './cookie'
 
 // other
 export { throttle, debounce } from './other'

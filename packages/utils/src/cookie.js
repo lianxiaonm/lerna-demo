@@ -30,6 +30,7 @@ export function parseCookie(params) {
   }, {})
 }
 
+
 export function createCookie(name, value, days = 365, isSubDomain = true) {
   if (!isClient || !isLegalKey(name)) return
   const optionArr = ['path=/']
@@ -59,6 +60,18 @@ export function readCookie(name, params) {
     }
   }
   return null
+}
+
+export function matchReadCookie(keyArr, params) {
+  const cookieInfo = parseCookie(params)
+  return (keyArr || []).reduce((result, item) => {
+    const { key, matches } = item
+    if (isLegalKey(key)) {
+      const value = cookieInfo[key]
+      result[key] = matches ? matches(value) : value
+    }
+    return result
+  }, Object.create(null))
 }
 
 
