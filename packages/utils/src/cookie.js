@@ -34,10 +34,10 @@ export function parseCookie(params) {
 export function createCookie(name, value, days = 365, isSubDomain = true) {
   if (!isClient || !isLegalKey(name)) return
   const optionArr = ['path=/']
-  if (isSubDomain) {
-    optionArr.unshift(`Domain=${getSubDomain()}`)
-  }
-  if (!Number.isNaN(+days)) {
+  if (isSubDomain) optionArr.unshift(`Domain=${getSubDomain()}`)
+  if (!isLegalKey(value)) {
+    optionArr.unshift(`Max-Age=${Math.floor(24 * 60 * 60 * -1)}`)
+  } else if (!Number.isNaN(+days)) {
     optionArr.unshift(`Max-Age=${Math.floor(24 * 60 * 60 * days)}`)
   }
   optionArr.unshift(`${name}=${encodeURIComponent(value)}`)

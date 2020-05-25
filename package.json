@@ -32,6 +32,7 @@
     "@mini-case/bin": "*",
     "@mini-case/eslint-config": "*",
     "@mini-case/react-component": "*",
+    "@mini-case/immer-redux": "*",
     "@mini-case/utils": "*",
     "babel-jest": "^26.0.1",
     "consola": "^2.11.3",

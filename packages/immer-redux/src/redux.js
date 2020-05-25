@@ -7,10 +7,11 @@ function setReducer(current, action) {
   if (/^@@redux/i.test(type)) return current
   const keyArr = (type || '').split('.')
   if (keyArr.length <= 1) throw new Error('action type must be defined')
-  return immutable(current, state => {
+  return immutable(current, draftState => {
     const lastKey = keyArr.pop()
-    const lastState = lodashGet(keyArr, state)
-    lastState[lastKey] = immutable(lastState[lastKey], payload)
+    const lastState = lodashGet(keyArr, draftState)
+    lastState[lastKey] = typeof payload === 'function' ?
+      immutable(lastState[lastKey], payload) : payload
   })
 }
 

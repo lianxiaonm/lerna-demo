@@ -9,5 +9,5 @@ export function addMiddleware() {
 }
 
 export function applyMiddleware(initState) {
-  middleList.reduce(immutable, initState || {})
+  return middleList.reduce(immutable, initState || {})
 }
