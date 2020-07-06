@@ -33,8 +33,8 @@ describe('transfer', () => {
 
   it('should DateFormat', () => {
     const date = dateFormat(new Date(), 'yyyy-MM-dd')
-    expect(date).toBe('2020-05-21')
+    expect(date).toBe('2020-06-11')
     const date1 = dateFormat(new Date(), 'yyyy-MM-dd hh')
-    expect(date1).toBe('2020-05-21 20')
+    expect(date1).toBe('2020-06-11 20')
   })
 })

@@ -18,8 +18,6 @@ class Slider extends RefsComponent {
     slidesPerView: number,
     slidesPerGroup: number,
     direction: oneOf(['horizontal', 'vertical']),
-    lookAhead: string,
-    lookBehind: string,
     pagination: bool,
     translateZ: bool,
     onSlide: func,
@@ -31,8 +29,6 @@ class Slider extends RefsComponent {
     slidesPerView: 1,
     slidesPerGroup: 1,
     direction: 'horizontal',
-    lookAhead: '0px',
-    lookBehind: '0px',
     pagination: true,
     translateZ: true,
     onSlide: () => false,
@@ -137,12 +133,13 @@ class Slider extends RefsComponent {
   indexGetter = index => {
     const { count } = this
     const { slidesPerGroup, slidesPerView } = this.props
+    const floorPreView = Math.floor(slidesPerView)
     let current = index
-    if (current < 0) return 0
+    if (current <= 0) return 0
     if (slidesPerGroup > 1) current += 1
     // 判断最后一个是否在视窗内
-    if (current > count - slidesPerView) {
-      current = count - slidesPerView
+    if (current > count - floorPreView) {
+      current = count - floorPreView
     }
     return Math.floor(current / slidesPerGroup) * slidesPerGroup
   }

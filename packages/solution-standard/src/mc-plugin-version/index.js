@@ -12,7 +12,6 @@ module.exports = {
     const curVersion = {}
     modules.forEach(({ name }) => {
       const pkgPath = path.resolve(resolve.sync(`${name}/package.json`, { basedir: cwd }))
-      console.log(pkgPath)
       curVersion[name] = require(pkgPath).version
     })
     expand.addEnv({ VERSION_CURRENT: curVersion })

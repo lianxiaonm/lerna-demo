@@ -7,6 +7,7 @@ function setReducer(current, action) {
   if (/^@@redux/i.test(type)) return current
   const keyArr = (type || '').split('.')
   if (keyArr.length <= 1) throw new Error('action type must be defined')
+  if (/\.@@replace$/i.test(type)) keyArr.pop()
   return immutable(current, draftState => {
     const lastKey = keyArr.pop()
     const lastState = lodashGet(keyArr, draftState)

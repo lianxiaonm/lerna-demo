@@ -79,7 +79,7 @@ export function getJSON({ url, param = {}, timeout = 20000 }) {
 let jsonpCount = 0
 
 export function jsonp({ url, param = {}, callbackKey = 'callback', timeout = 20000 }) {
-  const callback = `kobe_jsonp_${jsonpCount}`
+  const callback = `mica_jsonp_${jsonpCount}`
   const queryParam = { ...param, [callbackKey]: callback }
   const scriptUrl = buildUrl(url, queryParam)
 

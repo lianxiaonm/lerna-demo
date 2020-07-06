@@ -1,7 +1,3 @@
-import { createStore, addMiddleware } from '@mini-case/immer-redux'
-import { assignTo, parseCookie } from '@mini-case/utils'
-
-
-addMiddleware((draft) => assignTo(draft, { cookies: parseCookie() }))
+import { createStore } from '@mini-case/immer-redux'
 
 export default createStore(state => state, { })

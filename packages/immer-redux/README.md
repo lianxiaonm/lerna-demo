@@ -4,8 +4,8 @@
 
 ## Usage
 
-```javascript
-const { createStore,useDispatch,useImmutable,Provider } = require('@mini-case/immer-redux');
+```typescript jsx
+const { createStore,useDispatch,useImmutable, Provider } = require('@mini-case/immer-redux');
 
 // redux
 const store = createStore({})
@@ -36,6 +36,7 @@ const Component = ()=> {
   // 1. {}   2. { a: { b: { c: 'c ' } } }
 }
 
+ReactDom.render(<Provider/>,'id')
 
 
 
