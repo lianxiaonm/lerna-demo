@@ -8,12 +8,16 @@ import './style.less'
 
 const { node, bool, number, string, func, oneOf } = PropTypes
 
-const toFixed = value => Math.floor(value * 100) / 100
+const { floor } = Math
+const toFixed = value => floor(value * 100) / 100
+const isClient = typeof window !== 'undefined'
 
 class Slider extends RefsComponent {
   static propTypes = {
     children: node.isRequired,
     gap: string,
+    loop: bool,
+    autoplay: number,
     initialSlide: number,
     slidesPerView: number,
     slidesPerGroup: number,
@@ -25,6 +29,8 @@ class Slider extends RefsComponent {
 
   static defaultProps = {
     gap: '0px',
+    autoplay: 0,
+    loop: false,
     initialSlide: 0,
     slidesPerView: 1,
     slidesPerGroup: 1,
@@ -36,8 +42,11 @@ class Slider extends RefsComponent {
 
   constructor(props) {
     super(props)
-    const { initialSlide, children } = props
+    const { initialSlide, children, loop, autoplay } = props
+    if (autoplay && !loop) throw new Error('autoplay must be loop')
     this.$refs = {}
+    this.timer = -1
+    this.pulling = false
     this.unmount = false
     this.count = React.Children.count(children)
     this.state = { activeIndex: initialSlide }
@@ -45,8 +54,7 @@ class Slider extends RefsComponent {
 
   componentDidMount() {
     this.initPullElement()
-    this.onResize()
-    window.addEventListener('resize', this.onResize, true)
+    this.eventConvert(true)
   }
 
   componentDidUpdate(prevProps) {
@@ -56,13 +64,15 @@ class Slider extends RefsComponent {
     if (count !== this.count) {
       if (this.pullElement) this.pullElement.destroy()
       this.initPullElement()
+    } else if (slidesPerView !== prevProps.slidesPerView) {
+      this.onResize()
     }
-    if (slidesPerView !== prevProps.slidesPerView) this.onResize()
   }
 
   componentWillUnmount() {
+    this.pause()
+    this.eventConvert()
     this.unmount = true
-    window.removeEventListener('resize', this.onResize, true)
     if (this.pullElement) this.pullElement.destroy()
   }
 
@@ -78,28 +88,57 @@ class Slider extends RefsComponent {
     }
   }
 
+  eventConvert(isAdd) {
+    const { target } = this.$refs
+    const eventStr = isAdd ? 'addEventListener' : 'removeEventListener'
+    window[eventStr]('resize', this.onResize, true)
+    if (eventStr in target) {
+      const { parentNode: parent } = target
+      parent[eventStr]('mouseenter', this.onMouse, true)
+      parent[eventStr]('mouseleave', this.onMouse, true)
+    }
+  }
+
+  onMouse = evt => {
+    const { autoplay } = this.props
+    const { type, currentTarget, target } = evt
+    if (currentTarget === target && autoplay) {
+      if (type === 'mouseenter') this.pause()
+      else this.autoplay()
+    }
+  }
+
   onResize = throttle(() => {
     if (this.unmount) return
-    const gapPX = this.getGapPx()
-    const { height, width } = this.getPadOffset()
-    const isHorizontal = this.isHorizontal()
-
-    const { childNodes } = this.$refs.target || { childNodes: [] };
-    [].slice.call(childNodes).forEach(child => {
-      if (isHorizontal) {
-        child.style.marginRight = `${gapPX}px`
-        child.style.width = `${width}px`
-      } else {
-        child.style.marginBottom = `${gapPX}px`
-        child.style.height = `${height}px`
-      }
-    })
+    // const gapPX = this.getGapPx()
+    // const { height, width } = this.getPadOffset()
+    // const isHorizontal = this.isHorizontal()
+    //
+    // const { childNodes } = this.$refs.target || { childNodes: [] };
+    // [].slice.call(childNodes).forEach(child => {
+    //  if (isHorizontal) {
+    //    child.style.marginRight = `${gapPX}px`
+    //    child.style.width = `${width}px`
+    //  } else {
+    //    child.style.marginBottom = `${gapPX}px`
+    //    child.style.height = `${height}px`
+    //  }
+    // })
     this.switchSlide(this.state.activeIndex, false)
   }, 100 / 6)
 
   initPullElement() {
     const component = this
+    const {
+      props: { autoplay },
+      state: { activeIndex: initIndex },
+    } = this
     const isHorizontal = this.isHorizontal()
+
+    function pull() {
+      component.pulling = true
+      component.pause()
+    }
 
     function handlePullEnd({ translateX, translateY }) {
       this.preventDefault()
@@ -107,13 +146,20 @@ class Slider extends RefsComponent {
       const {
         translateX: prevTranslateX,
         translateY: prevTranslateY,
-      } = component.calculateDistance({ translateIndex: activeIndex })
+      } = component.calculateDistance({
+        translateIndex: component.getTranslateIndex(activeIndex),
+      })
       const diff = isHorizontal
         ? translateX - prevTranslateX
         : translateY - prevTranslateY
+
       if (diff > 20) component.switchPrev(true)
       else if (diff < -20) component.switchNext(true)
       else component.switchSlide(activeIndex, true)
+
+      // 滑动结束开启自动播放
+      component.pulling = false
+      if (autoplay) component.autoplay()
     }
 
     const side = isHorizontal ? 'Left' : 'Up'
@@ -122,26 +168,79 @@ class Slider extends RefsComponent {
       wait: false,
       target: this.$refs.target,
       transitionProperty: 'transform',
+      [`onPull${side}`]: pull,
+      [`onPull${side2}`]: pull,
       [`onPull${side}End`]: handlePullEnd,
       [`onPull${side2}End`]: handlePullEnd,
       translateZ: this.props.translateZ,
     })
     this.pullElement.init()
+
+    this.switchSlide(initIndex, false)
+
+    // 挂载结束，开启自动播放
+    if (autoplay) this.autoplay()
+  }
+
+  autoplay() {
+    const { autoplay } = this.props
+    if (!this.pulling && this.timer === -1) {
+      this.timer = setTimeout(() => {
+        if (!this.unmount) {
+          this.switchNext(true)
+          this.timer = -1
+          this.autoplay()
+        }
+      }, autoplay)
+    }
+  }
+
+  pause = () => {
+    if (this.timer !== -1) {
+      clearTimeout(this.timer)
+      this.timer = -1
+    }
+  }
+
+  getTranslateIndex = (index) => {
+    const isLoop = this.getLoop()
+    const { slidesPerGroup } = this.props
+    return isLoop ? index + slidesPerGroup : index
   }
 
   // 计算偏移量
   indexGetter = index => {
-    const { count } = this
-    const { slidesPerGroup, slidesPerView } = this.props
-    const floorPreView = Math.floor(slidesPerView)
+    const {
+      count,
+      props: { slidesPerGroup, slidesPerView },
+    } = this
+    const isLoop = this.getLoop()
+    const floorPreView = floor(slidesPerView)
+    const endBoundary = Math.max(1, count - floorPreView)
     let current = index
-    if (current <= 0) return 0
-    if (slidesPerGroup > 1) current += 1
-    // 判断最后一个是否在视窗内
-    if (current > count - floorPreView) {
-      current = count - floorPreView
+    let activeIndex = index
+
+    // 下标起点修复 1->2   2->3
+    if (current > 0 && slidesPerGroup > 1) current += 1
+
+    if (!isLoop) { // 非循环模式
+      if (current < 0) current = 0
+      else if (current > endBoundary) {
+        current = endBoundary // 超出边界 反弹回边界
+      }
+      activeIndex = current
+    } else { // 循环模式
+      // eslint-disable-next-line no-lonely-if
+      if (current < 0) {
+        activeIndex = (current % count) + count
+      } else if (current > endBoundary) {
+        activeIndex = current % count // 超出边界，进入自循环起始位
+      }
     }
-    return Math.floor(current / slidesPerGroup) * slidesPerGroup
+    return {
+      current: floor(current / slidesPerGroup) * slidesPerGroup,
+      activeIndex: floor(activeIndex / slidesPerGroup) * slidesPerGroup,
+    }
   }
 
   switchPrev = ani => {
@@ -158,16 +257,18 @@ class Slider extends RefsComponent {
 
   switchSlide =(index, animation) => {
     const { onSlide } = this.props
-    const activeIndex = this.indexGetter(index)
+    const { current, activeIndex } = this.indexGetter(index)
     const { translateX, translateY } = this.calculateDistance({
-      translateIndex: activeIndex,
+      translateIndex: this.getTranslateIndex(current),
     })
 
     const animateTo = () => {
       if (this.unmount || !this.pullElement) return
       this.setState({ activeIndex })
-      this.pullElement.animateTo(translateX, translateY)
-        .then(() => onSlide(activeIndex))
+      this.pullElement.animateTo(translateX, translateY).then(() => {
+        onSlide(activeIndex)
+        if (current !== activeIndex) this.switchSlide(activeIndex, false)
+      })
     }
 
     if (animation || [null, undefined].indexOf(animation) > -1) animateTo()
@@ -192,22 +293,48 @@ class Slider extends RefsComponent {
 
   render() {
     const {
+      slidesPerView, slidesPerGroup: copyCount, //
       children, pagination, direction, customPagination,
     } = this.props
-    const { activeIndex } = this.state
+    const { count, state: { activeIndex } } = this
     const children2 = React.Children.toArray(children)
+    const isLoop = this.getLoop()
+
+    if (isLoop) {
+      // 循环模式前后插入两个元素
+      const firstChild = children2.slice(0, copyCount)
+      const lastChild = children2.slice(-copyCount)
+      children2.push(...firstChild)
+      children2.unshift(...lastChild)
+    }
+
+    const gapPX = this.getGapPx()
+    const isHorizontal = this.isHorizontal()
+    const marginPx = toFixed(((slidesPerView - 1) * gapPX) / slidesPerView)
 
     // slideList
-    const slideList = children2.map((child, i) => (
-      <div key={i} data-active={activeIndex === i}
-        className="slide" children={child} />
-    ))
+    const slideList = children2.map((child, i) => {
+      let active = activeIndex === i
+      if (isLoop) {
+        if (activeIndex === 0) {
+          active = i === copyCount || i === count + copyCount
+        } else if (activeIndex === count - 1) {
+          active = i === count + (copyCount - 1) || i === copyCount - 1
+        } else {
+          active = activeIndex === i - copyCount
+        }
+      }
+      const styles = { width: `calc(${toFixed(100 / slidesPerView)}% - ${marginPx}px)` }
+      styles[isHorizontal ? 'marginRight' : 'marginBottom'] = `${gapPX}px`
+      return <div key={i} data-active={active} className="slide" style={styles} children={child} />
+    })
     // pagination
     let paginationNode
     if (typeof customPagination === 'function') {
       paginationNode = customPagination({
         total: React.Children.count(children),
         currentIndex: activeIndex,
+        onClick: index => this.switchSlide(index, true),
       })
     } else {
       const bullets = React.Children.map(children, (child, i) => (
@@ -222,6 +349,11 @@ class Slider extends RefsComponent {
         {paginationNode}
       </div>
     )
+  }
+
+  getLoop() {
+    const { loop, slidesPerGroup } = this.props
+    return isClient && loop && this.count > slidesPerGroup
   }
 
   // helpers

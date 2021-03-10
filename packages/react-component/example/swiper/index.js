@@ -11,29 +11,29 @@ const zhugeliang = 'https://gw.alipayobjects.com/zos/rmsportal/PTEIwVPOtOGzPmaEg
 export default (
   <div className="slider-example">
     <h3>default</h3>
-    <Swiper direction={"vertical"}>
-      <LazyLoad image={luban}/>
-      <LazyLoad image={miyue}/>
-      <LazyLoad image={zhangliang}/>
-      <LazyLoad image={yase}/>
-      <LazyLoad image={zhugeliang}/>
+    <Swiper direction="vertical" autoplay={5000} loop>
+      <LazyLoad image={luban} />
+      <LazyLoad image={miyue} />
+      <LazyLoad image={zhangliang} />
+      <LazyLoad image={yase} />
+      <LazyLoad image={zhugeliang} />
     </Swiper>
     <h3>2个一页</h3>
-    <Swiper slidesPerView={2} gap="32px">
-      <LazyLoad image={luban}/>
-      <LazyLoad image={miyue}/>
-      <LazyLoad image={zhangliang}/>
-      <LazyLoad image={yase}/>
-      <LazyLoad image={zhugeliang}/>
+    <Swiper slidesPerView={2} gap="32px" loop>
+      <LazyLoad image={luban} />
+      <LazyLoad image={miyue} />
+      <LazyLoad image={zhangliang} />
+      <LazyLoad image={yase} />
+      <LazyLoad image={zhugeliang} />
     </Swiper>
     <h3>2个一页2个分组</h3>
-    <Swiper slidesPerView={2} slidesPerGroup={2} gap="32px">
-      <LazyLoad image={luban}/>
-      <LazyLoad image={miyue}/>
-      <LazyLoad image={zhangliang}/>
-      <LazyLoad image={yase}/>
-      <LazyLoad image={zhugeliang}/>
-      <LazyLoad image={miyue}/>
+    <Swiper slidesPerView={2} slidesPerGroup={2} autoplay={5000} loop gap="32px">
+      <LazyLoad image={luban} />
+      <LazyLoad image={miyue} />
+      <LazyLoad image={zhangliang} />
+      <LazyLoad image={yase} />
+      <LazyLoad image={zhugeliang} />
+      <div />
     </Swiper>
   </div>
 )
