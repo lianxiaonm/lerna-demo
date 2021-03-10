@@ -25,6 +25,7 @@ class Slider extends RefsComponent {
     pagination: bool,
     translateZ: bool,
     onSlide: func,
+    dir: 'ltr',
   }
 
   static defaultProps = {
@@ -59,9 +60,9 @@ class Slider extends RefsComponent {
 
   componentDidUpdate(prevProps) {
     const { count } = this
-    const { children, slidesPerView } = this.props
+    const { children, slidesPerView, dir } = this.props
     this.count = React.Children.count(children)
-    if (count !== this.count) {
+    if (count !== this.count || prevProps.dir !== dir) {
       if (this.pullElement) this.pullElement.destroy()
       this.initPullElement()
     } else if (slidesPerView !== prevProps.slidesPerView) {
@@ -113,11 +114,12 @@ class Slider extends RefsComponent {
     // const gapPX = this.getGapPx()
     // const { height, width } = this.getPadOffset()
     // const isHorizontal = this.isHorizontal()
+    // const styleKey = this.isLtr() ? 'marginRight' : 'marginLeft'
     //
     // const { childNodes } = this.$refs.target || { childNodes: [] };
     // [].slice.call(childNodes).forEach(child => {
     //  if (isHorizontal) {
-    //    child.style.marginRight = `${gapPX}px`
+    //    child.style[styleKey] = `${gapPX}px`
     //    child.style.width = `${width}px`
     //  } else {
     //    child.style.marginBottom = `${gapPX}px`
@@ -134,6 +136,7 @@ class Slider extends RefsComponent {
       state: { activeIndex: initIndex },
     } = this
     const isHorizontal = this.isHorizontal()
+    const isLtr = this.isLtr()
 
     function pull() {
       component.pulling = true
@@ -149,12 +152,13 @@ class Slider extends RefsComponent {
       } = component.calculateDistance({
         translateIndex: component.getTranslateIndex(activeIndex),
       })
+
       const diff = isHorizontal
         ? translateX - prevTranslateX
         : translateY - prevTranslateY
 
-      if (diff > 20) component.switchPrev(true)
-      else if (diff < -20) component.switchNext(true)
+      if (diff > 20) component[isLtr ? 'switchPrev' : 'switchNext'](true)
+      else if (diff < -20) component[!isLtr ? 'switchPrev' : 'switchNext'](true)
       else component.switchSlide(activeIndex, true)
 
       // 滑动结束开启自动播放
@@ -280,10 +284,10 @@ class Slider extends RefsComponent {
   }
 
   calculateDistance = config => {
-    const { translateIndex } = config
     const gapPX = this.pxGetter(this.props.gap)
     const isHorizontal = this.isHorizontal()
     const { width, height } = this.getPadOffset()
+    const translateIndex = this.isLtr() ? config.translateIndex : -config.translateIndex
     const translateXValue = toFixed((+width + gapPX) * translateIndex)
     const translateYValue = toFixed((+height + gapPX) * translateIndex)
     const translateX = isHorizontal ? -translateXValue : 0
@@ -309,6 +313,7 @@ class Slider extends RefsComponent {
     }
 
     const gapPX = this.getGapPx()
+    const isLtr = this.isLtr()
     const isHorizontal = this.isHorizontal()
     const marginPx = toFixed(((slidesPerView - 1) * gapPX) / slidesPerView)
 
@@ -325,7 +330,8 @@ class Slider extends RefsComponent {
         }
       }
       const styles = { width: `calc(${toFixed(100 / slidesPerView)}% - ${marginPx}px)` }
-      styles[isHorizontal ? 'marginRight' : 'marginBottom'] = `${gapPX}px`
+      const marginKey = isLtr ? 'marginRight' : 'marginLeft'
+      styles[isHorizontal ? marginKey : 'marginBottom'] = `${gapPX}px`
       return <div key={i} data-active={active} className="slide" style={styles} children={child} />
     })
     // pagination
@@ -359,6 +365,10 @@ class Slider extends RefsComponent {
   // helpers
   isHorizontal() {
     return this.props.direction === 'horizontal'
+  }
+
+  isLtr() {
+    return this.props.dir === 'ltr'
   }
 
   getGapPx() {
