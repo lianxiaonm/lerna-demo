@@ -9,6 +9,7 @@
 
 # build file
 _dist
+dist
 build
 es
 lib

@@ -24,7 +24,8 @@
     "lint": "npm run lint:js && npm run lint:style",
     "lint:js": "eslint .",
     "lint:style": "stylelint \"**/*.less\" --syntax less",
-    "example:react": "cd example/react-component && yarn mock"
+    "dev:react": "cd example/react-component && yarn mock",
+    "build:react": "cd example/react-component && yarn build"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
