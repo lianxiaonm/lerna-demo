@@ -1,4 +1,4 @@
-const { toString: toStr } = Object
+const { toString: toStr } = Object.prototype
 const clz2type = {}
 const Undefined = undefined
 const typeArray = 'array'

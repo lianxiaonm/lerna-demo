@@ -17,13 +17,13 @@ module.exports = {
       expand.addExternal({ react: 'React', 'react-dom': 'ReactDOM' })
       if (isProd) {
         expand.addBody([
-          '<script src="https://cdn.bootcss.com/react/16.8.6/umd/react.production.min.js"></script>',
-          '<script src="https://cdn.bootcss.com/react-dom/16.8.6/umd/react-dom.production.min.js"></script>',
+          '<script src="https://unpkg.com/react@16.8.6/umd/react.production.min.js"></script>',
+          '<script src="https://unpkg.com/react@16.8.6/umd/react-dom.production.min.js"></script>',
         ])
       } else {
         expand.addBody([
-          '<script src="https://cdn.bootcss.com/react/16.8.6/umd/react.development.js"></script>',
-          '<script src="https://cdn.bootcss.com/react-dom/16.8.6/umd/react-dom.development.js"></script>',
+          '<script src="https://unpkg.com/react@16.8.6/umd/react.development.js"></script>',
+          '<script src="https://unpkg.com/react-dom@16.8.6/umd/react-dom.development.js"></script>',
         ])
       }
     } else {

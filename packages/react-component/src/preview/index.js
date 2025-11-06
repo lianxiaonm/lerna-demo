@@ -74,7 +74,7 @@ class Preview extends RefsComponent {
 
   componentDidMount() {
     const { root } = this.$refs
-    this.container = [].slice.call(root.querySelectorAll('.kobe-slider'))
+    this.container = [].slice.call(root.querySelectorAll('.mica-slider'))
     root.addEventListener('touchstart', this.handleTouchStart, false)
     root.addEventListener('touchmove', this.handleTouchMove, opts)
   }

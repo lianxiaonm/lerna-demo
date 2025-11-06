@@ -1,8 +1,8 @@
 import React from 'react'
-import ImmutableComponent from 'immutable-component'
 import PropTypes from 'prop-types'
 import Animate from '../animate'
 import LazyLoad from '../lazy-load'
+import Immutable from '../immutable'
 import { EVENTS, PROPERTIES } from './constans'
 import './style.less'
 
@@ -10,7 +10,7 @@ const { string, oneOf, func, bool } = PropTypes
 
 const inWx = /micromessenger/i.test(navigator.userAgent)
 
-export default class Video extends ImmutableComponent {
+export default class Video extends Immutable {
   static propTypes = {
     controls: bool,
     control: oneOf(['always', 'auto']),

@@ -1,0 +1,22 @@
+{
+  "name": "@mini-case/track",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "track monitor",
+  "author": {
+    "name": "lianxiao.nm",
+    "email": "lianxiao.nm@gmail.com",
+    "url": ""
+  },
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "yarn compile:lib",
+    "compile:lib": "cross-env BABEL_ENV=common babel src -d lib"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

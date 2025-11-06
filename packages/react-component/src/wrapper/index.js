@@ -14,7 +14,7 @@ const wrapper = (args) => InnerComponent => {
 
   const { loadProps = () => Promise.resolve() } = InnerComponent
 
-  class OuterComponent extends PureComponent {
+  return class OuterComponent extends PureComponent {
     constructor(props) {
       super(props)
       const param = getParam()
@@ -24,7 +24,7 @@ const wrapper = (args) => InnerComponent => {
 
     reload = (...args2) => this.loadData(...args2)
 
-    componentWillMount() { this.loadData() }
+    componentDidMount() { this.loadData() }
 
     loadData = (extra) => loadProps(this.param, extra)
       .then((data = {}) => this.setState({ data, err: null }))
@@ -48,7 +48,6 @@ const wrapper = (args) => InnerComponent => {
       return <InnerComponent {...this.param} initData={data} reload={this.reload} />
     }
   }
-  return OuterComponent
 }
 
 export default wrapper

@@ -1,0 +1,28 @@
+{
+  "name": "@mini-case/cacheable",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "cacheable redis",
+  "author": {
+    "name": "lianxiao.nm",
+    "email": "lianxiao.nm@gmail.com",
+    "url": ""
+  },
+  "sideEffects": false,
+  "main": "src/index.js",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "etag": "~1.8.1",
+    "json-buffer": "3.0.1",
+    "pretty-ms": "~7.0.0",
+    "querystring": "^0.2.0",
+    "redis": "^3.0.2"
+  }
+}

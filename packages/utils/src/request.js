@@ -1,4 +1,4 @@
-import { buildUrl } from './usual'
+import { buildUrl } from './transfer'
 
 /**
  * 11: 无权跨域
@@ -79,7 +79,7 @@ export function getJSON({ url, param = {}, timeout = 20000 }) {
 let jsonpCount = 0
 
 export function jsonp({ url, param = {}, callbackKey = 'callback', timeout = 20000 }) {
-  const callback = `kobe_jsonp_${jsonpCount}`
+  const callback = `mica_jsonp_${jsonpCount}`
   const queryParam = { ...param, [callbackKey]: callback }
   const scriptUrl = buildUrl(url, queryParam)
 
@@ -96,15 +96,14 @@ export function jsonp({ url, param = {}, callbackKey = 'callback', timeout = 200
     timer = setTimeout(() => reject(getError(13)), timeout)
     // jsonp callback
     window[callback] = res => resolve(res)
-    loadScript(scriptUrl, true)
-      .then(
-        () => {
-          // 加载完成但是 callback 未执行，置为 14: 解码失败
-          if (window[callback]) reject(getError(14))
-        },
-        // 脚本加载失败，置为 19: HTTP 错误
-        () => reject(getError(19)),
-      )
+    loadScript(scriptUrl, true).then(
+      () => {
+        // 加载完成但是 callback 未执行，置为 14: 解码失败
+        if (window[callback]) reject(getError(14))
+      },
+      // 脚本加载失败，置为 19: HTTP 错误
+      () => reject(getError(19)),
+    )
   }).catch(err => {
     throw err
   })

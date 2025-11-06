@@ -20,7 +20,7 @@ const glob = pify(_glob)
 export default class Package {
   constructor(options) {
     // Assign options
-    this.options = Object.assign({}, DEFAULTS, options)
+    this.options = { ...DEFAULTS, ...options }
 
     // Basic logger
     this.logger = consola
@@ -60,9 +60,10 @@ export default class Package {
   }
 
   load(relativePath, opts) {
-    return new Package(Object.assign({
+    return new Package({
       rootDir: this.resolvePath(relativePath),
-    }, opts))
+      ...opts,
+    })
   }
 
   generateVersion() {

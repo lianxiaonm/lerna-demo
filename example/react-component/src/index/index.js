@@ -2,10 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
+import { Provider } from 'react-redux'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import Home from '../home'
-import Layout from '../layout'
 import Component from '../component'
+import ReduxComponent from '../redux'
+import store from '../redux/middleware'
 
 const { object, node } = PropTypes
 
@@ -29,14 +31,16 @@ class ScrollToTop extends Component {
 
 ReactDOM.render(
   (
-  <Router>
-    <ScrollToTop>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/component/:name" component={Component} />
-        <Route path="/layout" component={Layout} />
-      </Switch>
-    </ScrollToTop>
-  </Router>
+    <Provider store={store}>
+      <Router>
+        <ScrollToTop>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/component/:name" component={Component} />
+            <Route exact path="/redux-component/:name" component={ReduxComponent} />
+          </Switch>
+        </ScrollToTop>
+      </Router>
+    </Provider>
   ), document.querySelector('main'),
 )

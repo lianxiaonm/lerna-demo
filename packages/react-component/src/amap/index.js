@@ -37,6 +37,9 @@ export default class Map extends PureComponent {
     if (this.amap) this.amap.destroy()
   }
 
+  // static getDerivedStateFromProps(props, state) {}
+
+  // eslint-disable-next-line react/no-deprecated
   componentWillReceiveProps(nextProps) {
     const showMap1 = checkProps(nextProps)
     if (equals(this.props, nextProps)) {

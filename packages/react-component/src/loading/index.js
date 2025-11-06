@@ -32,7 +32,7 @@ class Loading extends PureComponent {
 
   handleMove = e => e.preventDefault()
 
-  componentWillMount() {
+  componentDidMount() {
     const { delay } = this.props
     document.addEventListener('touchmove', this.handleMove, opts)
     this.timer = setTimeout(() => this.setState({ visible: true }), delay)

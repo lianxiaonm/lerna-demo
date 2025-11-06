@@ -85,8 +85,9 @@ class Slider extends RefsComponent {
   }
 
   componentWillUnmount() {
-    if (this.pullElement) this.pullElement.destroy()
     this.unmount = true
+    clearTimeout(this.timer)
+    if (this.pullElement) this.pullElement.destroy()
   }
 
   initPullElement() {
@@ -242,7 +243,11 @@ class Slider extends RefsComponent {
     } else {
       this.pullElement.setTranslate(translateX, translateY)
       Lazy.checkViewport()
-      setTimeout(() => this.pullElement.animateTo(translateX, translateY), 100)
+      setTimeout(() => {
+        if (!this.unmount) {
+          this.pullElement.animateTo(translateX, translateY)
+        }
+      }, 100)
     }
   }
 

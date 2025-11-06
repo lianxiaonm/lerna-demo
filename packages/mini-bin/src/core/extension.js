@@ -6,6 +6,7 @@ const { solution, extension: appExtensions = [] } = safeRequire(path.resolve('pa
 
 const { extension: soluExtensions = [] } = solution ? safeRequire(resolveCwd(solution)) : {}
 
+
 const initExtensions = [...soluExtensions, ...appExtensions]
 const extensionMap = new Map()
 
@@ -17,7 +18,7 @@ initExtensions.forEach(extension => {
     cp.execSync(`npm install ${extension}`)
   }
   const extensionPath = beta ? resolveCwd(extension.slice(0, -5)) : resolveCwd(extension)
-  const res = /mc-extension-([\w-]+)\//.exec(extensionPath)
+  const res = /mc-extension-([\w-]+)(\/|\\)/.exec(extensionPath)
   const extensionName = res && res[1]
   if (extensionName) extensionMap.set(extensionName, extensionPath)
 })

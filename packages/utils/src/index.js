@@ -1,30 +1,28 @@
-import type from './type'
-
 export const browser = !!(typeof window !== 'undefined' && window.document)
 
 // type
-export const checkType = type
+export { default as checkType } from './type'
 
 // extend
-export { valueFn, NO_OP, trim, includes, toArr, toJson, fromJson, toMap, hashCode, uuid, guid, equals } from './extend'
+export { valueFn, NO_OP, trim, includes, toArr, toMap, toJson, fromJson, assignTo, equals } from './extend'
 
-// dom
-export { isInViewport, px2PX, rem2PX, dp2PX, PX2dp, passiveSupported, featureSupport, easeOut, scrollBy } from './dom'
+// transfer
+export { lodashGet, immutable, serialize, deserialize, hashCode, uuid, guid, dateFormat, buildUrl } from './transfer'
 
 // image
-export { getZoom, getImage, webpFeautre } from './image'
+export { getZoom, webpFeautre, checkWebp, getImage, loadImage } from './image'
 
 // device
 export { version2Float, deviceDetection } from './device'
 
-// request
-export { getJSON, loadScript, jsonp } from './request'
+// cookies
+export { parseCookie, createCookie, readCookie, matchReadCookie, eraseCookie } from './cookie'
 
 // other
 export { throttle, debounce } from './other'
 
-// usual
-export { getParam, paramStr, buildUrl, dateFormat } from './usual'
+// request
+export { getJSON, jsonp, loadScript } from './request'
 
-// cookies
-export { createCookie, readCookie, eraseCookie } from './cookie'
+// dom
+export { getParam, isInViewport, rem2PX, px2PX, dp2PX, PX2dp, passiveSupported, featureSupport, easeOut, scrollBy } from './dom'

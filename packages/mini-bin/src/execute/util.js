@@ -31,7 +31,7 @@ exports.getSolution = async choiceTree => {
   const { solution } = await inquirer.prompt([{
     type: 'list',
     name: 'solution',
-    message: '请选择解决方案：',
+    message: '请选择解决方案(Please select a solution):',
     choices: Object.keys(choiceTree),
   }])
   // 不含子解决方案

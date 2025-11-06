@@ -16,31 +16,38 @@
   "scripts": {
     "start": "lerna bootstrap",
     "build": "yarn clean && lerna run build",
+    "watch": "lerna run watch --stream --parallel",
     "rm": "rimraf node_modules && lerna clean",
-    "clean": "rimraf packages/*/es && rimraf packages/*/lib",
+    "clean": "rimraf packages/*/es && rimraf packages/*/lib && rimraf packages/*/_dist",
     "postinstall": "lerna link",
-    "precommit": "lint-staged",
+    "test": "jest",
     "lint": "npm run lint:js && npm run lint:style",
     "lint:js": "eslint .",
     "lint:style": "stylelint \"**/*.less\" --syntax less",
-    "example:react": "cd example/react-component && yarn mock"
+    "dev:react": "cd example/react-component && yarn mock",
+    "build:react": "cd example/react-component && yarn build"
   },
   "devDependencies": {
-    "@babel/cli": "7",
-    "@mini-case/babel-preset": "1",
-    "@mini-case/eslint-config": "1",
-    "@mini-case/bin": "1",
-    "colors": "1",
-    "consola": "2",
-    "eslint": "5",
-    "esm": "3",
-    "husky": "0",
-    "lerna": "3",
-    "lint-staged": "8",
-    "ncp": "2",
-    "stylelint": "10",
-    "stylelint-config-standard": "18",
-    "rimraf": "2"
+    "@babel/cli": "^7.8.4",
+    "@mini-case/babel-preset": "*",
+    "@mini-case/bin": "*",
+    "@mini-case/eslint-config": "*",
+    "@mini-case/immer-redux": "*",
+    "@mini-case/react-component": "*",
+    "@mini-case/utils": "*",
+    "babel-jest": "^26.0.1",
+    "consola": "^2.11.3",
+    "cross-env": "^10.1.0",
+    "esm": "^3.2.25",
+    "husky": "^4.2.5",
+    "jest": "^26.0.1",
+    "lerna": "^3.21.0",
+    "lint-staged": "^10.1.7",
+    "ncp": "^2.0.0",
+    "rimraf": "^3.0.2",
+    "stylelint": "^13.3.2",
+    "stylelint-config-standard": "^20.0.0",
+    "typescript": "^3.9.2"
   },
   "engines": {
     "node": ">= 8.10.0"
@@ -50,7 +57,12 @@
     "registry": "https://registry.npmjs.org"
   },
   "lint-staged": {
-    "*.js": "eslint",
+    "*.js": "eslint --fix",
     "*.less": "stylelint --syntax less"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }

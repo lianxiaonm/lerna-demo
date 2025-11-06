@@ -1,0 +1,19 @@
+{
+  "env": {
+    "es": {
+      "presets": [
+        [
+          "@mini-case/babel-preset",
+          {
+            "modules": false
+          }
+        ]
+      ]
+    },
+    "common": {
+      "presets": [
+        "@mini-case/babel-preset"
+      ]
+    }
+  }
+}

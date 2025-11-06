@@ -7,15 +7,19 @@
 
 *.log
 
+# build file
+_dist
+dist
 build
 es
 lib
 coverage
-node_modules
+#
 
+node_modules
 fixtures/browser/*.cmd
 package-lock.json
 
 #
-*.lock
+#*.lock
 

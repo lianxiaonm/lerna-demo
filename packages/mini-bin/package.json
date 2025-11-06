@@ -11,17 +11,17 @@
     "url": ""
   },
   "dependencies": {
-    "colors": "1",
-    "commander": "2",
-    "compare-versions": "3",
-    "fetch.io": "5",
-    "inquirer": "5",
-    "map-stream": "0",
-    "resolve": "1",
-    "rimraf": "2",
-    "tar-fs": "1",
-    "vinyl-fs": "3",
-    "write-json-file": "2"
+    "colors": "^1.4.0",
+    "commander": "^5.1.0",
+    "compare-versions": "^3.6.0",
+    "fetch.io": "^5.0.0",
+    "inquirer": "^5.2.0",
+    "map-stream": "^0.0.7",
+    "resolve": "^1.16.1",
+    "rimraf": "^3.0.2",
+    "tar-fs": "^1.16.3",
+    "vinyl-fs": "^3.0.3",
+    "write-json-file": "^2.3.0"
   },
   "publishConfig": {
     "access": "public"

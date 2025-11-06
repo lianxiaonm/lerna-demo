@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { loadImage } from '@mini-case/utils'
 import Lazy from '../lazy'
 import './style.less'
 
@@ -10,7 +11,6 @@ export default class LazyLoad extends Lazy {
     image: string,
     type: string,
     quality: number,
-    scale: number,
     mode: oneOf(['cover', 'contain']),
     round: bool,
     mask: bool,
@@ -22,7 +22,6 @@ export default class LazyLoad extends Lazy {
     image: '',
     type: 'smallShop',
     quality: 90,
-    scale: 1,
     round: false,
     mask: true,
     shortSide: false,
@@ -34,21 +33,9 @@ export default class LazyLoad extends Lazy {
   state = { image: '', fuzzy: '' }
 
   inViewPort = () => {
-    const { scale } = this.props
-    this.getImage(scale).then(newImage => {
-      if (!this.unmount && newImage) {
-        this.setState({ image: newImage })
-      }
-    })
-  }
-
-  getImage = () => {
-    const { image } = this.props
-    return new Promise((resolve, reject) => {
-      const img = new Image()
-      img.addEventListener('load', () => resolve(image))
-      img.addEventListener('error', () => reject(new Error('image load error')))
-      img.src = image
+    const { image: img, quality, shortSide } = this.props
+    loadImage({ img, quality, shortSide }).then(image => {
+      if (!this.unmount && image) this.setState({ image })
     })
   }
 
