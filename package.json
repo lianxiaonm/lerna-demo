@@ -25,7 +25,7 @@
     "lint:js": "eslint .",
     "lint:style": "stylelint \"**/*.less\" --syntax less",
     "dev:react": "cd example/react-component && yarn mock",
-    "build:react": "cd example/react-component && yarn build"
+    "build:react": "rimraf dist && cd example/react-component && yarn build"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

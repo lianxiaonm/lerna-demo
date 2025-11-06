@@ -2,6 +2,6 @@
   "solution": "@mini-case/solution-react",
   "scripts": {
     "mock": "cross-env NODE_OPTIONS=--openssl-legacy-provider mica dev --mode mock",
-    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider mica build"
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider mica build && ncp dist ../../dist"
   }
 }
