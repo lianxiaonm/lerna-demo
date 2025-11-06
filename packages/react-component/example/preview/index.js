@@ -14,7 +14,7 @@ function onClick() {
     current: 0,
     viewType: 'image',
     children: [luban, miyue, zhangliang, yase, zhugeliang]
-      .map((image,key) => <LazyLoad  key={key} image={image} />),
+      .map((image, key) => <LazyLoad key={key} image={image} />),
   })
 }
 

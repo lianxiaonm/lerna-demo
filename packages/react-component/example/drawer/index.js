@@ -23,8 +23,8 @@ class ModalExample extends PureComponent {
         <Drawer visible={visible} onClose={this.onClose} container=".drawer">
           <h1>王者荣耀</h1>
           <div className="drawer">
-            <LazyLoad image={luban}/>
-            <LazyLoad image={miyue}/>
+            <LazyLoad image={luban} />
+            <LazyLoad image={miyue} />
           </div>
         </Drawer>
       </div>
@@ -32,4 +32,4 @@ class ModalExample extends PureComponent {
   }
 }
 
-export default <ModalExample/>
+export default <ModalExample />

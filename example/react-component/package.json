@@ -1,6 +1,6 @@
 {
   "solution": "@mini-case/solution-react",
   "scripts": {
-    "mock": "mica dev --mode mock"
+    "mock": "cross-env NODE_OPTIONS=--openssl-legacy-provider mica dev --mode mock"
   }
 }

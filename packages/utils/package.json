@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "build": "yarn compile:lib",
-    "compile:lib": "BABEL_ENV=common babel src -d lib"
+    "compile:lib": "cross-env BABEL_ENV=common babel src -d lib"
   },
   "publishConfig": {
     "access": "public"

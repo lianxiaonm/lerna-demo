@@ -25,41 +25,39 @@ const defaultHeroArr = [{
   logo: zhugeliang,
 }]
 
-const Column = ({ name, logo }) => {
-  return (
+const Column = ({ name, logo }) => (
     <div className="item">
       <h1>{name}</h1>
-      <LazyLoad image={logo} shortSide round/>
+      <LazyLoad image={logo} shortSide round />
     </div>
-  )
-}
+)
 
 class LoadMoreExample extends PureComponent {
   state = { heroArr: defaultHeroArr }
-  
+
   loadMore = () => new Promise(resolve => {
     setTimeout(() => {
       const { heroArr } = this.state
       this.setState({ heroArr: [...heroArr, ...heroArr] }, resolve)
     }, 1000)
   })
-  
+
   render() {
     const { heroArr } = this.state
     return (
       <div className="load-more-example">
-        <VirtualList
-          itemData={heroArr}
+        <VirtualList itemData={heroArr}
+          // eslint-disable-next-line react/jsx-no-bind
           getListProps={config => ({
             ...config,
             estimatedItemSize: 300,
-            itemSize: () => 300
+            itemSize: () => 300,
           })}
-          children={<Column/>}/>
-        <LoadMore showMore={this.loadMore}/>
+          children={<Column />} />
+        <LoadMore showMore={this.loadMore} />
       </div>
     )
   }
 }
 
-export default <LoadMoreExample/>
+export default <LoadMoreExample />

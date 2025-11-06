@@ -1,17 +1,17 @@
 import React, { PureComponent } from 'react'
-import { Progress,VirtualList } from '@mini-case/react-component'
+import { Progress, VirtualList } from '@mini-case/react-component'
 import './style.less'
 
 const { BarLine, Circle, Numbers } = Progress
 
-const BarLineItem = ({ value })=> (
+const BarLineItem = ({ value }) => (
   <BarLine value={+value} total={1000} theme="orange">
     <span className="sale-count">{`已售${value}份`}</span>
   </BarLine>
 )
 
 const barLineList = [...new Array(200)].map(() => ({
-  value:(Math.random() * 800).toFixed(0)
+  value: (Math.random() * 800).toFixed(0),
 }))
 
 class ProgressExample extends PureComponent {
@@ -28,9 +28,8 @@ class ProgressExample extends PureComponent {
             )
           })}
         </div>
-        <VirtualList
-          itemData={barLineList}
-          children={<BarLineItem/>}/>
+        <VirtualList itemData={barLineList}
+          children={<BarLineItem />} />
       </div>
     )
   }

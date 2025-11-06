@@ -1,21 +1,21 @@
 import React from 'react'
-import { Sticky, VirtualList,LoadMore } from '@mini-case/react-component'
+import { Sticky, VirtualList, LoadMore } from '@mini-case/react-component'
 import './style.less'
 
 const itemData = [...new Array(100)].map((_, index) => ({ index }))
 
-const Column = ({ index })=> <div children={`Row ${index}`}/>
+const Column = ({ index }) => <div children={`Row ${index}`} />
 
 class VirtualListExample extends React.PureComponent {
   state = { itemList: itemData }
-  
+
   loadMore = () => new Promise(resolve => {
     setTimeout(() => {
       const { itemList } = this.state
       this.setState({ itemList: [...itemList, ...itemList] }, resolve)
     }, 1000)
   })
-  
+
   render() {
     const { itemList } = this.state
     return (
@@ -23,12 +23,11 @@ class VirtualListExample extends React.PureComponent {
         <Sticky top={0}>
           <span className="sticky">sticky</span>
         </Sticky>
-        <VirtualList
-          serverHeight={document.documentElement.clientHeight}
+        <VirtualList serverHeight={document.documentElement.clientHeight}
           itemData={itemList}
-          getListProps={config=> ({ ...config })}
-          children={<Column/>}
-        />
+          // eslint-disable-next-line react/jsx-no-bind
+          getListProps={config => ({ ...config })}
+          children={<Column />} />
         <LoadMore showMore={this.loadMore} />
       </div>
     )
